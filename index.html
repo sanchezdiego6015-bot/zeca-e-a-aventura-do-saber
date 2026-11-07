@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Zeca e a Aventura dos Números</title>
+<title>Zeca e a Aventura do Saber</title>
 <meta name="theme-color" content="#26b562">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -118,6 +118,22 @@ canvas.scratch{width:100%;height:150px;background:#fffef7;border-radius:14px;box
 .wardrobe{display:grid;grid-template-columns:270px 1fr;gap:16px;align-items:start}@media(max-width:820px){.wardrobe{grid-template-columns:1fr}}
 .zbox{text-align:center;position:sticky;top:78px;background:linear-gradient(#e9fff1,#c9f2d9);border-radius:22px;padding:10px}.zprev svg{max-width:100%}
 .igrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:10px}.icard{background:#f6fbff;border-radius:18px;padding:8px;text-align:center;display:flex;flex-direction:column;gap:6px;box-shadow:inset 0 0 0 3px #e3eefb}.icard.on{box-shadow:inset 0 0 0 4px var(--purple)}.icard.try{box-shadow:inset 0 0 0 4px var(--yellow)}
+.tier{font-size:12px;font-weight:800;border-radius:10px;padding:1px 8px;align-self:center;letter-spacing:.3px}.prog{height:8px;border-radius:6px;background:#dbe5f2;overflow:hidden}.prog i{display:block;height:100%;border-radius:6px}.need{color:#6b7a90;font-size:13px}
+.home2{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+@media(max-width:820px){.home2{grid-template-columns:1fr}.zside{order:-1;position:static!important}.zbig svg{height:230px!important}}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.subj{border:0;border-radius:26px;color:#fff;padding:14px 10px;min-height:150px;text-align:center;cursor:pointer;box-shadow:0 7px 0 rgba(36,59,83,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:24px;font-weight:800;text-shadow:0 2px 0 rgba(0,0,0,.18);transition:transform .1s}
+.subj:active{transform:translateY(3px)}.subj .e{font-size:50px;line-height:1.1}.subj small{font-size:14px;font-weight:600;text-shadow:none}
+.subj .bd{background:rgba(255,255,255,.92);color:#243b53;border-radius:12px;padding:2px 10px;font-size:13px;font-weight:800;text-shadow:none;margin-top:4px}
+.subj.soon{background:linear-gradient(135deg,#c9d3df,#a7b5c6);cursor:default;opacity:.92}
+.zside{text-align:center;position:sticky;top:78px}.zbig{line-height:0;cursor:pointer;display:inline-block}.zbig svg{height:min(60vh,500px);width:auto;max-width:100%;animation:bob 2.4s ease-in-out infinite}
+.zbub{background:#fff;border-radius:22px;padding:12px 16px;font-size:19px;font-weight:700;box-shadow:0 5px 0 rgba(36,59,83,.12);display:inline-block;max-width:430px;margin-bottom:16px;position:relative}
+.zbub:after{content:'';position:absolute;left:50%;bottom:-12px;margin-left:-12px;border:12px solid transparent;border-top-color:#fff;border-bottom:0}
+.zuts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px}.zuts .tile{min-height:0;padding:8px 10px;font-size:15px;flex:1;min-width:120px}.zuts .tile .e{font-size:30px}
+.topic{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#fff;border-radius:20px;padding:10px 14px;margin-bottom:10px;box-shadow:0 4px 0 rgba(36,59,83,.1)}
+.pbar2{height:12px;border-radius:8px;background:rgba(255,255,255,.5);overflow:hidden;margin:6px 0}.pbar2 i{display:block;height:100%;background:#ffd23f}
+.sbody{font-size:22px;line-height:1.5;max-width:720px;margin:6px auto;text-align:left;background:#f6fbff;border-radius:18px;padding:14px 18px}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.vw{background:#f6fbff;border-radius:18px;padding:10px;text-align:center;box-shadow:inset 0 0 0 3px #e3eefb}.vw .ve{font-size:52px;line-height:1.1}.vw b{font-size:22px;display:block}.vw small{color:#6b7a90;display:block}.vw button{display:block;margin:8px auto 0;min-width:64px}
 .icard button{min-height:42px;padding:2px 6px;font-size:14px}
 @keyframes ring{50%{box-shadow:0 0 0 12px rgba(229,72,77,.25)}}button.listening{animation:ring .9s infinite}.ithumb svg{width:100%;height:92px}.iname{font-weight:700;font-size:15px;min-height:38px;display:flex;align-items:center;justify-content:center}.itag{font-size:13px;color:#12864a;font-weight:700}
 #celebrate{position:fixed;right:10px;bottom:6px;z-index:60;pointer-events:none;text-align:center;animation:cin .3s ease-out}#celebrate.out{opacity:0;transition:opacity .3s}
@@ -179,11 +195,11 @@ function wr(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 let IX=rd(IDX)||{active:'p1',ids:['p1']};
 const KEY=keyOf(IX.active);let NOSAVE=false;
 const mkLv=()=>range(0,3).map(()=>({done:false,best:0,tries:0}));
-function defaults(){return{id:IX.active,name:'',stars:0,coins:0,spent:0,xp:0,owned:[],outfit:[],equip:'',cheer:true,sound:true,voice:false,lvl:{mult:mkLv(),div:mkLv(),add:mkLv(),sub:mkLv(),mfac:mkLv(),dfac:mkLv(),dq:mkLv(),pm1:mkLv(),pm2:mkLv()},facts:{},stats:{},errKinds:{},ms:0,t:{ex:0,combo:0,balloons:0,exams:0,bestExam:0,missions:0},trophies:[],exams:[],sessions:[]};}
+function defaults(){return{id:IX.active,name:'',stars:0,coins:0,spent:0,xp:0,owned:[],outfit:[],equip:'',cheer:true,sound:true,voice:false,lvl:{mult:mkLv(),div:mkLv(),add:mkLv(),sub:mkLv(),mfac:mkLv(),dfac:mkLv(),dq:mkLv(),pm1:mkLv(),pm2:mkLv()},facts:{},stats:{},errKinds:{},ms:0,t:{ex:0,combo:0,balloons:0,exams:0,bestExam:0,missions:0},trophies:[],exams:[],sessions:[],study:{},wrongQ:[]};}
 let S=Object.assign(defaults(),rd(KEY)||{});
 if(!Array.isArray(S.outfit))S.outfit=[];if(S.equip&&!S.outfit.length){S.outfit=[S.equip];S.equip='';}
 for(const k of['add','sub','mfac','dfac','dq','pm1','pm2'])S.lvl[k]=S.lvl[k]||mkLv();if(S.cheer===undefined)S.cheer=true;
-S.lvl.add=S.lvl.add||mkLv();S.lvl.sub=S.lvl.sub||mkLv();
+S.lvl.add=S.lvl.add||mkLv();S.lvl.sub=S.lvl.sub||mkLv();if(!S.study||typeof S.study!=='object')S.study={};if(!Array.isArray(S.wrongQ))S.wrongQ=[];
 const SES={t:Date.now(),ok:0,err:0,c0:S.coins+S.spent,s0:S.stars};
 function save(){if(NOSAVE)return;try{if(sessionSec>=5||SES.ok+SES.err>0){const e={t:SES.t,sec:sessionSec,ok:SES.ok,err:SES.err,coins:S.coins+S.spent-SES.c0,stars:S.stars-SES.s0};const a=S.sessions;if(a.length&&a[a.length-1].t===SES.t)a[a.length-1]=e;else a.push(e);if(a.length>30)a.splice(0,a.length-30);}localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 document.addEventListener('visibilitychange',()=>{if(document.hidden)save();});window.addEventListener('pagehide',save);
@@ -234,96 +250,150 @@ function confirmModal(text,yes='Voltar ao início',no='Continuar jogando'){retur
 /* ============ mascote e loja ============ */
 /* ============ Zeca de corpo inteiro e armário ============ */
 const star=(x,y,r,f)=>{const p=[];for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,q=i%2?r*.45:r;p.push((x+q*Math.cos(a)).toFixed(1)+','+(y+q*Math.sin(a)).toFixed(1));}return`<polygon points="${p.join(' ')}" fill="${f}"/>`;};
-const ZB_TAIL=`<path d="M206 410 C276 416 312 356 294 296 C286 262 258 246 242 262 C264 290 262 336 236 366 C222 382 212 394 206 410Z" fill="#f08a24"/><path d="M294 296 C286 262 258 246 242 262 C266 270 282 282 294 296Z" fill="#fffaf0"/>`;
-const ZB_BODY=`<path d="M112 205 C100 255 104 315 122 352 L198 352 C216 315 220 255 208 205Z" fill="#f08a24"/><path d="M138 216 C128 262 136 322 160 342 C184 322 192 262 182 216Z" fill="#fff3e0"/>
-<path d="M112 218 C94 250 90 290 96 322" stroke="#f08a24" stroke-width="24" stroke-linecap="round" fill="none"/><path d="M208 218 C226 250 230 290 224 322" stroke="#f08a24" stroke-width="24" stroke-linecap="round" fill="none"/>
-<circle cx="96" cy="328" r="13" fill="#5b3a29"/><circle cx="224" cy="328" r="13" fill="#5b3a29"/>
-<path d="M128 346 L128 472 L156 472 L158 346Z" fill="#f08a24"/><path d="M162 346 L164 472 L192 472 L192 346Z" fill="#f08a24"/>
-<path d="M128 428 L128 472 L156 472 L156 428Z" fill="#5b3a29"/><path d="M164 428 L164 472 L192 472 L192 428Z" fill="#5b3a29"/>
-<ellipse cx="136" cy="488" rx="27" ry="12" fill="#4a2f21"/><ellipse cx="184" cy="488" rx="27" ry="12" fill="#4a2f21"/>`;
-const ZB_HEAD=`<path d="M104 94 L96 36 L142 68Z" fill="#f08a24"/><path d="M216 94 L224 36 L178 68Z" fill="#f08a24"/><path d="M108 84 L106 54 L128 70Z" fill="#ffd9b0"/><path d="M212 84 L214 54 L192 70Z" fill="#ffd9b0"/><path d="M96 36 L99 52 L114 46Z" fill="#5b3a29"/><path d="M224 36 L221 52 L206 46Z" fill="#5b3a29"/>
-<path d="M96 118 C96 78 128 56 160 56 C192 56 224 78 224 118 C224 160 196 190 160 190 C124 190 96 160 96 118Z" fill="#f08a24"/>
-<path d="M96 128 C118 128 138 142 160 168 C182 142 202 128 224 128 C220 168 196 192 160 192 C124 192 100 168 96 128Z" fill="#fffaf0"/>
-<circle cx="112" cy="152" r="9" fill="#ff9aa8" opacity=".45"/><circle cx="208" cy="152" r="9" fill="#ff9aa8" opacity=".45"/>
-<ellipse cx="130" cy="122" rx="9" ry="12" fill="#2b1d16"/><ellipse cx="190" cy="122" rx="9" ry="12" fill="#2b1d16"/><circle cx="127" cy="117" r="3.2" fill="#fff"/><circle cx="187" cy="117" r="3.2" fill="#fff"/>
-<ellipse cx="160" cy="158" rx="10" ry="7" fill="#2b1d16"/><path d="M147 170 Q160 183 173 170" stroke="#2b1d16" stroke-width="3.5" fill="none" stroke-linecap="round"/>`;
-const ZB_TAILG=`<g class="ztail">${ZB_TAIL}</g>`;
+/* ===== Zeca estilo A (desenho animado 2D clássico) — base, peças e itens ===== */
+const OL='#4a2511',STK=`stroke="${OL}" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"`;
+const ZDEFS=`<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<linearGradient id="zo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb04a"/><stop offset="1" stop-color="#ef7a10"/></linearGradient>
+<linearGradient id="zc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffdf6"/><stop offset="1" stop-color="#ffe9c8"/></linearGradient>
+<linearGradient id="zgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0a0"/><stop offset=".5" stop-color="#ffc933"/><stop offset="1" stop-color="#d99a00"/></linearGradient>
+<linearGradient id="zmetal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f8fc"/><stop offset="1" stop-color="#9aa7b8"/></linearGradient>
+<linearGradient id="zdark" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#555b72"/><stop offset="1" stop-color="#1c1f2b"/></linearGradient>
+<linearGradient id="zscr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8ff0ff"/><stop offset="1" stop-color="#2a7bff"/></linearGradient>
+<linearGradient id="zneon" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3df2ff"/><stop offset="1" stop-color="#b66bff"/></linearGradient>
+</defs></svg>`;
+const ZB_TAIL=`<path d="M206 420 C292 430 322 350 298 286 C288 256 258 244 240 262 C262 290 262 336 232 368 C218 384 210 398 206 420Z" fill="url(#zo)"/><path d="M298 286 C288 256 258 244 240 262 C268 268 286 276 298 286Z" fill="#fffdf6"/><path d="M270 330 C276 316 272 304 262 296" stroke="#c85f0a" stroke-width="4" fill="none" opacity=".6"/>`;
+const ZB_BODY=`<ellipse cx="160" cy="506" rx="86" ry="11" fill="#000" opacity=".13" stroke="none"/><g ${STK}>
+<path d="M128 380 L124 470 Q124 484 138 484 L154 484 Q158 484 158 470 L160 380Z" fill="url(#zo)"/><path d="M162 380 L162 470 Q162 484 166 484 L182 484 Q196 484 196 470 L192 380Z" fill="url(#zo)"/>
+<path d="M124 440 L124 470 Q124 484 138 484 L156 484 L158 440Z" fill="#6b3a1e" stroke="none"/><path d="M162 440 L164 484 L182 484 Q196 484 196 470 L196 440Z" fill="#6b3a1e" stroke="none"/>
+<ellipse cx="130" cy="492" rx="34" ry="15" fill="#6b3a1e"/><ellipse cx="190" cy="492" rx="34" ry="15" fill="#6b3a1e"/><ellipse cx="120" cy="488" rx="9" ry="4" fill="#fff" opacity=".3" stroke="none"/><ellipse cx="180" cy="488" rx="9" ry="4" fill="#fff" opacity=".3" stroke="none"/>
+<path d="M110 212 C96 270 100 340 118 392 Q160 410 202 392 C220 340 224 270 210 212Z" fill="url(#zo)"/>
+<path d="M136 226 C124 276 132 340 160 372 C188 340 196 276 184 226Z" fill="url(#zc)" stroke-width="3.5"/>
+<path d="M112 228 C88 254 82 292 90 330" fill="none" stroke-width="34"/><path d="M112 228 C88 254 82 292 90 330" fill="none" stroke="#f58d1f" stroke-width="25"/>
+<path d="M208 228 C232 254 238 292 230 330" fill="none" stroke-width="34"/><path d="M208 228 C232 254 238 292 230 330" fill="none" stroke="#f58d1f" stroke-width="25"/>
+<circle cx="90" cy="338" r="16" fill="#6b3a1e"/><circle cx="230" cy="338" r="16" fill="#6b3a1e"/></g>`;
+const ZB_HEAD=`<g ${STK}>
+<path d="M100 98 C84 60 84 20 96 10 C118 14 146 40 150 66Z" fill="url(#zo)"/><path d="M104 86 C96 62 96 38 100 28 C114 34 130 50 134 66Z" fill="#ffc9a1" stroke="none"/>
+<path d="M220 98 C236 60 236 20 224 10 C202 14 174 40 170 66Z" fill="url(#zo)"/><path d="M216 86 C224 62 224 38 220 28 C206 34 190 50 186 66Z" fill="#ffc9a1" stroke="none"/>
+<path d="M82 124 C82 72 120 48 160 48 C200 48 238 72 238 124 C238 176 204 202 160 202 C116 202 82 176 82 124Z" fill="url(#zo)"/>
+<path d="M82 132 C108 128 132 146 160 178 C188 146 212 128 238 132 C234 178 204 204 160 204 C116 204 86 178 82 132Z" fill="url(#zc)" stroke="none"/>
+<path d="M82 124 C82 72 120 48 160 48 C200 48 238 72 238 124 C238 176 204 202 160 202 C116 202 82 176 82 124Z" fill="none"/>
+<path d="M110 90 Q128 76 146 88" fill="none" stroke-width="6"/><path d="M174 88 Q192 76 210 90" fill="none" stroke-width="6"/>
+<ellipse cx="128" cy="120" rx="21" ry="26" fill="#fff" stroke-width="4"/><ellipse cx="192" cy="120" rx="21" ry="26" fill="#fff" stroke-width="4"/>
+<ellipse cx="132" cy="124" rx="12" ry="17" fill="#3a1f0f" stroke="none"/><ellipse cx="188" cy="124" rx="12" ry="17" fill="#3a1f0f" stroke="none"/>
+<circle cx="137" cy="115" r="5.5" fill="#fff" stroke="none"/><circle cx="193" cy="115" r="5.5" fill="#fff" stroke="none"/><circle cx="129" cy="131" r="2.6" fill="#fff" stroke="none"/><circle cx="185" cy="131" r="2.6" fill="#fff" stroke="none"/>
+<ellipse cx="98" cy="158" rx="11" ry="7" fill="#ff7f93" opacity=".55" stroke="none"/><ellipse cx="222" cy="158" rx="11" ry="7" fill="#ff7f93" opacity=".55" stroke="none"/>
+<path d="M148 154 Q160 146 172 154 Q172 166 160 168 Q148 166 148 154Z" fill="#2b1d16" stroke-width="3"/><ellipse cx="156" cy="154" rx="4" ry="2" fill="#fff" opacity=".7" stroke="none"/>
+<path d="M126 170 Q160 214 194 170 Q160 178 126 170Z" fill="#7a1f2b" stroke-width="4"/>
+<path d="M142 186 Q160 176 178 186 Q172 202 160 203 Q148 202 142 186Z" fill="#ff7b8e" stroke="none"/>
+<path d="M130 172 Q160 180 190 172 L186 178 Q160 186 134 178Z" fill="#fff" stroke="none"/></g>`;
+const ZB_TAILG=`<g class="ztail" ${STK}>${ZB_TAIL}</g>`;
 /* corte (viewBox) de cada região, usado nas miniaturas e no Zeca pequeno */
-const CROP={full:'0 -30 320 560',head:'70 -34 180 240',face:'90 90 140 90',neck:'100 170 120 120',torso:'60 190 200 180',legs:'90 320 140 190',feet:'90 430 140 90',back:'30 150 260 320',hand:'40 120 260 260'};
-/* ---- fábricas de peças ---- */
-const tee=(c,d,o={})=>{const b=o.bottom||340,L=o.long;const body=`<path d="M112 208 C130 222 190 222 208 208 L238 248 L216 268 L207 254 L206 ${b} L114 ${b} L113 254 L104 268 L82 248Z" fill="${c}"/>`;
-  const sl=L?`<path d="M108 222 C92 252 88 292 94 318" stroke="${c}" stroke-width="30" fill="none"/><path d="M212 222 C228 252 232 292 226 318" stroke="${c}" stroke-width="30" fill="none"/><path d="M90 304 L106 308M214 308 L230 304" stroke="${d}" stroke-width="12"/>`:'';
-  return`<g>${sl}${body}<path d="M134 212 Q160 236 186 212" fill="none" stroke="${d}" stroke-width="6" stroke-linecap="round"/>${o.extra||''}</g>`;};
-const dress=(c,d)=>`<g><path d="M114 330 C100 380 88 415 80 448 L240 448 C232 415 220 380 206 330Z" fill="${c}"/><path d="M112 208 C130 222 190 222 208 208 L238 248 L216 268 L207 254 L206 336 L114 336 L113 254 L104 268 L82 248Z" fill="${c}"/><path d="M134 212 Q160 236 186 212" fill="none" stroke="${d}" stroke-width="6" stroke-linecap="round"/><rect x="114" y="326" width="92" height="9" fill="${d}"/></g>`;
-const pants=(c,d,len)=>{const y=len||470;return`<g><path d="M122 338 L198 338 L${y===470?196:197} ${y} L${y===470?164:163} ${y} L160 ${Math.min(392,y-20)} L${y===470?156:157} ${y} L${y===470?124:123} ${y}Z" fill="${c}"/><rect x="122" y="338" width="76" height="11" fill="${d}"/></g>`;};
-const shoeSneaker=(c,s)=>`<g><ellipse cx="136" cy="489" rx="31" ry="16" fill="${c}"/><ellipse cx="184" cy="489" rx="31" ry="16" fill="${c}"/><path d="M105 496 H167 V503 Q136 510 105 503Z" fill="${s}"/><path d="M153 496 H215 V503 Q184 510 153 503Z" fill="${s}"/><path d="M124 480 H148 M126 487 H146 M172 480 H196 M174 487 H194" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".9"/></g>`;
-const shoeBoot=(c,t)=>`<g><rect x="121" y="432" width="38" height="62" rx="9" fill="${c}"/><rect x="161" y="432" width="38" height="62" rx="9" fill="${c}"/><rect x="121" y="432" width="38" height="9" rx="4" fill="${t}"/><rect x="161" y="432" width="38" height="9" rx="4" fill="${t}"/><ellipse cx="136" cy="492" rx="31" ry="13" fill="${c}"/><ellipse cx="184" cy="492" rx="31" ry="13" fill="${c}"/><path d="M105 498 H167 V504 H105Z M153 498 H215 V504 H153Z" fill="#2a2a33"/></g>`;
-const scarf=(a,b)=>`<g><path d="M118 188 Q160 214 202 188 L202 208 Q160 234 118 208Z" fill="${a}"/><path d="M168 214 L196 276 L170 282 L158 222Z" fill="${b}"/><path d="M178 240 L192 238 M182 254 L196 252" stroke="${a}" stroke-width="5"/></g>`;
+const CROP={full:'0 -30 320 560',head:'60 -10 200 230',face:'76 70 168 130',neck:'90 180 140 120',torso:'50 190 220 200',legs:'90 320 140 190',feet:'80 440 160 90',back:'10 150 300 330',hand:'10 120 300 280',tech:'0 190 200 190',wrist:'170 270 120 90'};
+const mir=g=>`<g transform="translate(320 0) scale(-1 1)">${g}</g>`;
+const ARML='M112 228 C88 254 82 292 90 330',ARMR='M208 228 C232 254 238 292 230 330';
+/* ---- fábricas de peças (contorno aplicado por zecaSVG) ---- */
+const tee=(c,d,o={})=>{const b=o.bottom||342,L=o.long;
+  const body=`<path d="M110 214 C132 232 188 232 210 214 C212 250 214 300 212 ${b} Q160 ${b+14} 108 ${b} C106 300 108 250 110 214Z" fill="${c}"/>`;
+  const sl=L?`<path d="M112 226 C88 252 82 290 90 316" fill="none" stroke="${OL}" stroke-width="32"/><path d="M112 226 C88 252 82 290 90 316" fill="none" stroke="${c}" stroke-width="24"/><path d="M208 226 C232 252 238 290 230 316" fill="none" stroke="${OL}" stroke-width="32"/><path d="M208 226 C232 252 238 290 230 316" fill="none" stroke="${c}" stroke-width="24"/><path d="M78 308 L102 314 M242 308 L218 314" stroke="${d}" stroke-width="9" fill="none"/>`
+   :`<path d="M110 216 C92 220 78 234 74 252 L76 274 L104 276 C106 262 108 252 114 248Z" fill="${c}"/><path d="M210 216 C228 220 242 234 246 252 L244 274 L216 276 C214 262 212 252 206 248Z" fill="${c}"/><path d="M76 268 L104 270 M216 270 L244 268" stroke="${d}" stroke-width="7" fill="none"/>`;
+  return`<g>${body}${sl}<path d="M134 220 Q160 248 186 220" fill="none" stroke="${d}" stroke-width="7"/><path d="M108 ${b-6} Q160 ${b+8} 212 ${b-6}" fill="none" stroke="${d}" stroke-width="8"/>${o.extra||''}</g>`;};
+const dress=(c,d)=>`<g><path d="M112 326 C98 380 84 420 72 456 Q160 474 248 456 C236 420 222 380 208 326Z" fill="${c}"/><path d="M110 214 C132 232 188 232 210 214 C212 250 214 300 212 336 L108 336 C106 300 108 250 110 214Z" fill="${c}"/><path d="M110 216 C92 220 78 234 74 252 L76 270 L104 272 C106 262 108 252 114 248Z" fill="${c}"/><path d="M210 216 C228 220 242 234 246 252 L244 270 L216 272 C214 262 212 252 206 248Z" fill="${c}"/><path d="M134 220 Q160 248 186 220" fill="none" stroke="${d}" stroke-width="7"/><path d="M107 328 H213" stroke="${d}" stroke-width="10"/><path d="M130 350 C126 390 118 420 110 448 M160 354 V454 M190 350 C194 390 202 420 210 448" stroke="${d}" stroke-width="3" fill="none" opacity=".45"/></g>`;
+const pants=(c,d,len,pat)=>{const y=len||470;return`<g><path d="M116 338 L204 338 L199 ${y} L163 ${y} L161 394 L159 394 L157 ${y} L121 ${y}Z" fill="${c}"/>${pat||''}<path d="M116 338 H204 V352 H116Z" fill="${d}"/><path d="M121 ${y-8} H157 M163 ${y-8} H199" stroke="${d}" stroke-width="8"/></g>`;};
+const shoeSneaker=(c,s,lace)=>{const one=`<path d="M94 492 Q94 470 118 468 L146 468 Q168 470 170 488 Q170 508 148 508 L114 508 Q94 508 94 492Z" fill="${c}"/><path d="M96 498 H168 Q168 510 148 510 L114 510 Q96 510 96 498Z" fill="${s}"/><path d="M116 476 H142 M118 484 H144" stroke="${lace||'#fff'}" stroke-width="3.5" fill="none"/>`;return`<g>${one}${mir(one)}</g>`;};
+const shoeBoot=(c,t)=>{const one=`<path d="M122 438 H158 V478 Q172 480 172 494 Q172 508 150 508 L116 508 Q96 508 96 494 Q96 480 122 478Z" fill="${c}"/><rect x="120" y="434" width="40" height="12" rx="5" fill="${t}"/><path d="M98 502 H170" stroke="#2a2a33" stroke-width="5"/>`;return`<g>${one}${mir(one)}</g>`;};
+const scarf=(a,b)=>`<g><path d="M110 204 Q160 238 210 204 L214 230 Q160 264 106 230Z" fill="${a}"/><path d="M166 244 L206 308 L180 320 L154 256Z" fill="${b}"/><path d="M178 272 L196 266 M186 286 L204 280" stroke="${a}" stroke-width="5" fill="none"/></g>`;
+const gem=(x,y,r,f)=>`<path d="M${x-r} ${y} L${x-r*.5} ${y-r*.8} H${x+r*.5} L${x+r} ${y} L${x} ${y+r*1.1}Z" fill="${f}"/><path d="M${x-r*.5} ${y-r*.8} L${x} ${y} L${x+r*.5} ${y-r*.8} M${x-r} ${y} H${x+r} M${x} ${y} V${y+r*1.1}" stroke="#fff" stroke-width="1.6" fill="none" opacity=".7"/>`;
+const screen=(x,y,w,h,r)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r||4}" fill="url(#zscr)" stroke="#0b2a5a" stroke-width="2.5"/><path d="M${x+4} ${y+4} L${x+w*.5} ${y+4} L${x+4} ${y+h*.5}Z" fill="#fff" opacity=".35" stroke="none"/>`;
 const ITEMS=[
  /* cabeça */
- {id:'cap',slot:'head',name:'Boné azul',price:30,svg:`<g><path d="M118 82 C118 52 138 40 160 40 C182 40 202 52 202 82Z" fill="#2f80ed"/><path d="M190 78 C222 76 246 82 250 92 C238 100 208 98 186 90Z" fill="#1d5fd1"/><circle cx="160" cy="40" r="5" fill="#1d5fd1"/></g>`},
- {id:'capr',slot:'head',name:'Boné vermelho',price:30,svg:`<g><path d="M118 82 C118 52 138 40 160 40 C182 40 202 52 202 82Z" fill="#e5484d"/><path d="M190 78 C222 76 246 82 250 92 C238 100 208 98 186 90Z" fill="#b3282d"/><circle cx="160" cy="40" r="5" fill="#b3282d"/></g>`},
- {id:'beanie',slot:'head',name:'Gorro de lã',price:35,svg:`<g><path d="M114 86 C114 48 138 34 160 34 C182 34 206 48 206 86Z" fill="#ffb02e"/><path d="M118 62 H202 M122 48 H198" stroke="#fff" stroke-width="7" opacity=".85"/><rect x="112" y="76" width="96" height="15" rx="7" fill="#e58f00"/><circle cx="160" cy="30" r="13" fill="#fff"/></g>`},
- {id:'bow',slot:'head',name:'Laço rosa',price:35,svg:`<g transform="translate(206 54)"><path d="M0 0 L-28 -17 L-28 17Z" fill="#ff6fb5"/><path d="M0 0 L28 -17 L28 17Z" fill="#ff6fb5"/><circle r="8" fill="#e0408f"/></g>`},
- {id:'chef',slot:'head',name:'Chapéu de chef',price:60,svg:`<g><circle cx="132" cy="34" r="23" fill="#fff" stroke="#dfe6ef" stroke-width="3"/><circle cx="160" cy="18" r="27" fill="#fff" stroke="#dfe6ef" stroke-width="3"/><circle cx="188" cy="34" r="23" fill="#fff" stroke="#dfe6ef" stroke-width="3"/><rect x="127" y="44" width="66" height="28" rx="4" fill="#fff" stroke="#dfe6ef" stroke-width="3"/></g>`},
- {id:'hat',slot:'head',name:'Cartola',price:70,svg:`<g><ellipse cx="160" cy="68" rx="56" ry="10" fill="#14141c"/><rect x="126" y="-8" width="68" height="72" rx="6" fill="#26262f"/><rect x="126" y="42" width="68" height="14" fill="#e5484d"/></g>`},
- {id:'wizh',slot:'head',name:'Chapéu de mago',price:90,svg:`<g><path d="M112 72 L160 -30 L208 72Z" fill="#6d4aff"/><ellipse cx="160" cy="72" rx="62" ry="12" fill="#5a3bd6"/>${star(158,22,13,'#ffd23f')}${star(184,50,8,'#ffd23f')}</g>`},
- {id:'pirate',slot:'head',name:'Chapéu de pirata',price:90,svg:`<g><path d="M96 76 C110 18 210 18 224 76 C198 60 122 60 96 76Z" fill="#1c1c24"/><path d="M96 76 C122 64 198 64 224 76 L218 84 C192 72 128 72 102 84Z" fill="#32323e"/><circle cx="160" cy="44" r="10" fill="#fff"/><rect x="155" y="50" width="10" height="7" fill="#fff"/><circle cx="156" cy="43" r="2.4" fill="#1c1c24"/><circle cx="164" cy="43" r="2.4" fill="#1c1c24"/></g>`},
- {id:'crown',slot:'head',name:'Coroa dourada',price:150,svg:`<g><path d="M118 76 L118 30 L140 52 L160 20 L180 52 L202 30 L202 76Z" fill="#ffc933" stroke="#d99a00" stroke-width="3" stroke-linejoin="round"/><circle cx="160" cy="36" r="5" fill="#e5484d"/><circle cx="132" cy="62" r="4.5" fill="#2f80ed"/><circle cx="188" cy="62" r="4.5" fill="#1fb866"/></g>`},
- {id:'helmet',slot:'head',name:'Capacete de astronauta',price:200,svg:`<g><circle cx="160" cy="124" r="86" fill="#bfe3ff" opacity=".28"/><circle cx="160" cy="124" r="86" fill="none" stroke="#e3ecf7" stroke-width="9"/><path d="M104 70 C120 48 150 40 178 44" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none" opacity=".8"/><rect x="100" y="192" width="120" height="17" rx="8" fill="#cfd8e3"/><circle cx="118" cy="200" r="3" fill="#8da0b6"/><circle cx="202" cy="200" r="3" fill="#8da0b6"/></g>`},
+ {id:'cap',slot:'head',name:'Boné azul',price:30,svg:`<g><path d="M112 88 C110 54 134 40 160 40 C186 40 210 54 208 88Z" fill="#2f80ed"/><path d="M192 82 C224 78 250 84 256 96 C242 106 208 104 188 94Z" fill="#1d5fd1"/><circle cx="160" cy="40" r="6" fill="#1d5fd1"/><path d="M130 52 Q150 44 166 46" stroke="#fff" stroke-width="4" fill="none" opacity=".5"/></g>`},
+ {id:'capr',slot:'head',name:'Boné vermelho',price:30,svg:`<g><path d="M112 88 C110 54 134 40 160 40 C186 40 210 54 208 88Z" fill="#e5484d"/><path d="M192 82 C224 78 250 84 256 96 C242 106 208 104 188 94Z" fill="#b3282d"/><circle cx="160" cy="40" r="6" fill="#b3282d"/><path d="M130 52 Q150 44 166 46" stroke="#fff" stroke-width="4" fill="none" opacity=".5"/></g>`},
+ {id:'beanie',slot:'head',name:'Gorro de lã',price:35,svg:`<g><path d="M108 92 C106 48 132 32 160 32 C188 32 214 48 212 92Z" fill="#ffb02e"/><path d="M112 68 H208 M116 52 H204" stroke="#fff" stroke-width="8" fill="none" opacity=".9"/><rect x="104" y="82" width="112" height="18" rx="9" fill="#e58f00"/><circle cx="160" cy="28" r="15" fill="#fff"/></g>`},
+ {id:'bow',slot:'head',name:'Laço rosa',price:35,svg:`<g transform="translate(212 60)"><path d="M0 0 L-32 -20 L-32 20Z" fill="#ff6fb5"/><path d="M0 0 L32 -20 L32 20Z" fill="#ff6fb5"/><circle r="9" fill="#e0408f"/></g>`},
+ {id:'chef',slot:'head',name:'Chapéu de chef',price:60,svg:`<g><circle cx="130" cy="38" r="25" fill="#fff"/><circle cx="160" cy="20" r="29" fill="#fff"/><circle cx="190" cy="38" r="25" fill="#fff"/><rect x="124" y="46" width="72" height="34" rx="5" fill="#fff"/><path d="M134 56 V76 M160 56 V76 M186 56 V76" stroke="#dfe6ef" stroke-width="3" fill="none"/></g>`},
+ {id:'hat',slot:'head',name:'Cartola',price:70,svg:`<g><ellipse cx="160" cy="68" rx="60" ry="11" fill="#14141c"/><rect x="124" y="-10" width="72" height="76" rx="7" fill="#26262f"/><rect x="124" y="42" width="72" height="16" fill="#e5484d"/><path d="M134 0 V34" stroke="#fff" stroke-width="4" fill="none" opacity=".25"/></g>`},
+ {id:'wizh',slot:'head',name:'Chapéu de mago',price:90,svg:`<g><path d="M110 74 L160 -34 L210 74Z" fill="#6d4aff"/><ellipse cx="160" cy="74" rx="66" ry="13" fill="#5a3bd6"/>${star(156,24,13,'#ffd23f')}${star(186,52,8,'#ffd23f')}</g>`},
+ {id:'pirate',slot:'head',name:'Chapéu de pirata',price:90,svg:`<g><path d="M92 80 C108 16 212 16 228 80 C200 62 120 62 92 80Z" fill="#1c1c24"/><path d="M92 80 C120 66 200 66 228 80 L222 90 C196 76 124 76 98 90Z" fill="#32323e"/><circle cx="160" cy="44" r="11" fill="#fff"/><rect x="154" y="51" width="12" height="8" fill="#fff"/><circle cx="155" cy="43" r="2.6" fill="#1c1c24" stroke="none"/><circle cx="165" cy="43" r="2.6" fill="#1c1c24" stroke="none"/></g>`},
+ {id:'crown',slot:'head',name:'Coroa dourada',price:150,svg:`<g><path d="M114 80 L112 30 L138 54 L160 18 L182 54 L208 30 L206 80Z" fill="url(#zgold)"/><circle cx="160" cy="40" r="6" fill="#e5484d"/><circle cx="130" cy="68" r="5" fill="#2f80ed"/><circle cx="190" cy="68" r="5" fill="#1fb866"/></g>`},
+ {id:'helmet',slot:'head',name:'Capacete de astronauta',price:200,svg:`<g><circle cx="160" cy="124" r="96" fill="#bfe3ff" opacity=".3" stroke="none"/><circle cx="160" cy="124" r="96" fill="none" stroke="#e3ecf7" stroke-width="10"/><path d="M96 66 C116 40 150 32 180 36" stroke="#fff" stroke-width="8" stroke-linecap="round" fill="none" opacity=".85"/><rect x="96" y="204" width="128" height="20" rx="9" fill="#cfd8e3"/><circle cx="116" cy="214" r="3.5" fill="#8da0b6" stroke="none"/><circle cx="204" cy="214" r="3.5" fill="#8da0b6" stroke="none"/></g>`},
+ {id:'hphones',slot:'head',name:'Fone de ouvido gamer',price:300,svg:`<g><path d="M80 124 C78 40 242 40 240 124" fill="none" stroke="#1c1f2b" stroke-width="12"/><path d="M80 124 C78 40 242 40 240 124" fill="none" stroke="#3df2ff" stroke-width="3.5"/><rect x="64" y="104" width="30" height="58" rx="14" fill="url(#zdark)"/><rect x="226" y="104" width="30" height="58" rx="14" fill="url(#zdark)"/><circle cx="79" cy="133" r="7" fill="#3df2ff" stroke="none"/><circle cx="241" cy="133" r="7" fill="#b66bff" stroke="none"/><path d="M70 160 Q72 186 108 192" fill="none" stroke="#1c1f2b" stroke-width="5"/><circle cx="112" cy="192" r="7" fill="url(#zdark)"/></g>`},
+ {id:'dcrown',slot:'head',name:'Coroa de diamantes',price:1800,svg:`<g><path d="M108 82 L104 26 L134 54 L160 8 L186 54 L216 26 L212 82Z" fill="url(#zgold)"/><path d="M108 70 H212" stroke="#d99a00" stroke-width="5" fill="none"/>${gem(160,42,13,'#8fe9ff')}${gem(126,62,8,'#ff8ad8')}${gem(194,62,8,'#a6ffb0')}<circle cx="104" cy="24" r="6" fill="#fff"/><circle cx="216" cy="24" r="6" fill="#fff"/><circle cx="160" cy="8" r="6" fill="#fff"/></g>`},
  /* rosto */
- {id:'glasses',slot:'face',name:'Óculos redondos',price:40,svg:`<g fill="none" stroke="#243b53" stroke-width="5"><circle cx="130" cy="122" r="19" fill="rgba(255,255,255,.25)"/><circle cx="190" cy="122" r="19" fill="rgba(255,255,255,.25)"/><path d="M149 120 H171 M111 118 L98 112 M209 118 L222 112"/></g>`},
- {id:'glass',slot:'face',name:'Óculos escuros',price:50,svg:`<g><path d="M106 108 H154 V128 Q154 146 136 146 H124 Q106 146 106 128Z" fill="#14141c"/><path d="M166 108 H214 V128 Q214 146 196 146 H184 Q166 146 166 128Z" fill="#14141c"/><rect x="150" y="112" width="20" height="6" fill="#14141c"/><path d="M114 116 L134 112" stroke="#fff" stroke-width="3" opacity=".5" stroke-linecap="round"/></g>`},
- {id:'starg',slot:'face',name:'Óculos de estrela',price:60,svg:`<g>${star(130,122,27,'#ff6fb5')}${star(190,122,27,'#ff6fb5')}<rect x="150" y="117" width="20" height="5" fill="#e0408f"/></g>`},
- {id:'mask',slot:'face',name:'Máscara de herói',price:70,svg:`<g><path d="M102 106 C124 97 196 97 218 106 C221 134 204 143 188 139 L172 129 L148 129 L132 139 C116 143 99 134 102 106Z" fill="#1d3fbf"/><ellipse cx="130" cy="122" rx="13" ry="15" fill="#fff"/><ellipse cx="190" cy="122" rx="13" ry="15" fill="#fff"/><ellipse cx="130" cy="123" rx="8" ry="11" fill="#2b1d16"/><ellipse cx="190" cy="123" rx="8" ry="11" fill="#2b1d16"/></g>`},
+ {id:'glasses',slot:'face',name:'Óculos redondos',price:40,svg:`<g fill="none" stroke="#243b53" stroke-width="6"><circle cx="128" cy="120" r="29" fill="rgba(180,225,255,.28)"/><circle cx="192" cy="120" r="29" fill="rgba(180,225,255,.28)"/><path d="M157 118 H163 M99 114 L84 108 M221 114 L236 108"/></g>`},
+ {id:'glass',slot:'face',name:'Óculos escuros',price:50,svg:`<g><path d="M96 98 H156 V124 Q156 150 134 150 H118 Q96 150 96 124Z" fill="#14141c"/><path d="M164 98 H224 V124 Q224 150 202 150 H186 Q164 150 164 124Z" fill="#14141c"/><path d="M154 104 H166 V112 H154Z" fill="#14141c"/><path d="M108 108 L138 104" stroke="#fff" stroke-width="4" opacity=".55" stroke-linecap="round" fill="none"/></g>`},
+ {id:'starg',slot:'face',name:'Óculos de estrela',price:60,svg:`<g>${star(128,120,34,'#ff6fb5')}${star(192,120,34,'#ff6fb5')}<rect x="150" y="114" width="20" height="6" fill="#e0408f"/></g>`},
+ {id:'mask',slot:'face',name:'Máscara de herói',price:70,svg:`<g><path d="M92 98 C120 86 200 86 228 98 C232 134 210 148 190 144 L172 130 L148 130 L130 144 C110 148 88 134 92 98Z" fill="#1d3fbf"/><ellipse cx="128" cy="120" rx="19" ry="22" fill="#fff"/><ellipse cx="192" cy="120" rx="19" ry="22" fill="#fff"/><ellipse cx="131" cy="123" rx="10" ry="14" fill="#3a1f0f" stroke="none"/><ellipse cx="189" cy="123" rx="10" ry="14" fill="#3a1f0f" stroke="none"/><circle cx="135" cy="116" r="4.5" fill="#fff" stroke="none"/><circle cx="193" cy="116" r="4.5" fill="#fff" stroke="none"/></g>`},
+ {id:'vr',slot:'face',name:'Óculos de realidade virtual',price:650,svg:`<g><path d="M82 112 C80 100 90 94 104 94 H216 C230 94 240 100 238 112 L238 140 C238 154 228 158 214 158 H188 Q172 156 160 148 Q148 156 132 158 H106 C92 158 82 154 82 140Z" fill="url(#zdark)"/><rect x="96" y="104" width="52" height="42" rx="14" fill="#10243d" stroke="#3df2ff" stroke-width="3.5"/><rect x="172" y="104" width="52" height="42" rx="14" fill="#10243d" stroke="#b66bff" stroke-width="3.5"/><path d="M106 114 L130 112" stroke="#fff" stroke-width="4" opacity=".6" stroke-linecap="round" fill="none"/><path d="M182 114 L206 112" stroke="#fff" stroke-width="4" opacity=".6" stroke-linecap="round" fill="none"/><path d="M82 120 H66 M238 120 H254" stroke="#1c1f2b" stroke-width="10" fill="none"/></g>`},
  /* pescoço */
  {id:'scarfr',slot:'neck',name:'Cachecol vermelho',price:45,svg:scarf('#e5484d','#c9363b')},
  {id:'scarfv',slot:'neck',name:'Cachecol verde e amarelo',price:55,svg:scarf('#1fb866','#ffd23f')},
- {id:'bowtie',slot:'neck',name:'Gravata borboleta',price:40,svg:`<g><path d="M160 204 L126 186 L126 222Z" fill="#7c5cff"/><path d="M160 204 L194 186 L194 222Z" fill="#7c5cff"/><circle cx="160" cy="204" r="8" fill="#5a3bd6"/></g>`},
- {id:'tie',slot:'neck',name:'Gravata',price:45,svg:`<g><path d="M150 200 L170 200 L176 216 L160 296 L144 216Z" fill="#e5484d"/><path d="M146 196 L174 196 L170 208 L150 208Z" fill="#b3282d"/></g>`},
- {id:'medal',slot:'neck',name:'Medalha de ouro',price:100,svg:`<g><path d="M136 190 L160 236 L184 190" fill="none" stroke="#2f80ed" stroke-width="9"/><circle cx="160" cy="248" r="19" fill="#ffc933" stroke="#d99a00" stroke-width="4"/>${star(160,248,11,'#d99a00')}</g>`},
- {id:'flowers',slot:'neck',name:'Colar de flores',price:50,svg:`<g>${[0,1,2,3,4,5,6].map(i=>{const t=i/6,x=124+t*72,y=200+Math.sin(t*Math.PI)*14;return`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="9" fill="${['#ff6fb5','#ffd23f','#fff','#ff9f1c','#ff6fb5','#ffd23f','#fff'][i]}" stroke="#fff" stroke-width="1.5"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3" fill="#e5484d"/>`;}).join('')}</g>`},
+ {id:'bowtie',slot:'neck',name:'Gravata borboleta',price:40,svg:`<g><path d="M160 222 L120 202 L120 244Z" fill="#7c5cff"/><path d="M160 222 L200 202 L200 244Z" fill="#7c5cff"/><circle cx="160" cy="222" r="10" fill="#5a3bd6"/></g>`},
+ {id:'tie',slot:'neck',name:'Gravata',price:45,svg:`<g><path d="M148 214 L172 214 L180 236 L160 322 L140 236Z" fill="#e5484d"/><path d="M144 208 L176 208 L172 224 L148 224Z" fill="#b3282d"/></g>`},
+ {id:'medal',slot:'neck',name:'Medalha de ouro',price:100,svg:`<g><path d="M130 206 L160 262 L190 206" fill="none" stroke="#2f80ed" stroke-width="11"/><circle cx="160" cy="280" r="23" fill="url(#zgold)"/><circle cx="160" cy="280" r="15" fill="none" stroke="#d99a00" stroke-width="3"/>${star(160,280,11,'#d99a00')}</g>`},
+ {id:'flowers',slot:'neck',name:'Colar de flores',price:50,svg:`<g>${[0,1,2,3,4,5,6].map(i=>{const t=i/6,x=116+t*88,y=210+Math.sin(t*Math.PI)*22;return`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="11" fill="${['#ff6fb5','#ffd23f','#fff','#ff9f1c','#ff6fb5','#ffd23f','#fff'][i]}"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.5" fill="#e5484d" stroke="none"/>`;}).join('')}</g>`},
+ {id:'chain',slot:'neck',name:'Corrente de ouro',price:500,svg:`<g><path d="M116 206 Q160 262 204 206" fill="none" stroke="${OL}" stroke-width="12"/><path d="M116 206 Q160 262 204 206" fill="none" stroke="url(#zgold)" stroke-width="7" stroke-dasharray="11 4"/><circle cx="160" cy="250" r="19" fill="url(#zgold)"/><path d="M149 258 V242 L160 252 L171 242 V258" fill="none" stroke="#a86f00" stroke-width="4"/></g>`},
  /* roupas */
  {id:'teeb',slot:'torso',name:'Camiseta azul',price:40,svg:tee('#2f80ed','#1d5fd1')},
  {id:'teer',slot:'torso',name:'Camiseta vermelha',price:40,svg:tee('#e5484d','#b3282d')},
  {id:'teev',slot:'torso',name:'Camiseta verde',price:40,svg:tee('#1fb866','#12864a')},
  {id:'teea',slot:'torso',name:'Camiseta amarela',price:40,svg:tee('#ffd23f','#d9a800')},
- {id:'vest',slot:'torso',name:'Colete de explorador',price:80,svg:`<g><path d="M112 210 C130 222 190 222 208 210 L212 340 L108 340Z" fill="#c8a165"/><path d="M160 224 V340" stroke="#a07c44" stroke-width="4"/><rect x="118" y="276" width="30" height="26" rx="4" fill="#b58a4c"/><rect x="172" y="276" width="30" height="26" rx="4" fill="#b58a4c"/><path d="M134 212 Q160 236 186 212" fill="none" stroke="#a07c44" stroke-width="6" stroke-linecap="round"/></g>`},
- {id:'hood',slot:'torso',name:'Moletom roxo',price:70,svg:tee('#7c5cff','#5a3bd6',{long:1,bottom:346,extra:`<path d="M118 206 Q160 244 202 206 L202 196 Q160 222 118 196Z" fill="#5a3bd6"/><path d="M150 232 V266 M170 232 V266" stroke="#fff" stroke-width="4" stroke-linecap="round"/>`})},
- {id:'jeanj',slot:'torso',name:'Jaqueta jeans',price:90,svg:tee('#4b78b8','#2f5589',{long:1,bottom:346,extra:`<path d="M160 222 V346" stroke="#2f5589" stroke-width="4"/><rect x="122" y="262" width="26" height="22" rx="3" fill="none" stroke="#2f5589" stroke-width="3"/><rect x="172" y="262" width="26" height="22" rx="3" fill="none" stroke="#2f5589" stroke-width="3"/>`})},
- {id:'lab',slot:'torso',name:'Jaleco de cientista',price:110,svg:tee('#f4f8fc','#c5d2e0',{long:1,bottom:404,extra:`<path d="M160 222 V404" stroke="#c5d2e0" stroke-width="4"/><rect x="170" y="318" width="26" height="22" rx="3" fill="none" stroke="#c5d2e0" stroke-width="3"/><circle cx="150" cy="260" r="3.5" fill="#c5d2e0"/><circle cx="150" cy="290" r="3.5" fill="#c5d2e0"/>`})},
- {id:'soccer',slot:'torso',name:'Camisa de futebol',price:120,svg:tee('#1fb866','#ffd23f',{extra:`<path d="M82 248 L104 268 M238 248 L216 268" stroke="#ffd23f" stroke-width="9"/><path d="M134 214 L160 250 L186 214" fill="none" stroke="#ffd23f" stroke-width="7" stroke-linejoin="round"/><path d="M160 262 V338" stroke="#ffd23f" stroke-width="5" opacity=".8"/>`})},
+ {id:'vest',slot:'torso',name:'Colete de explorador',price:80,svg:`<g><path d="M110 214 C132 232 188 232 210 214 L214 346 Q160 358 106 346Z" fill="#c8a165"/><path d="M160 236 V352" stroke="#a07c44" stroke-width="4" fill="none"/><rect x="116" y="278" width="32" height="30" rx="5" fill="#b58a4c"/><rect x="172" y="278" width="32" height="30" rx="5" fill="#b58a4c"/><path d="M134 220 Q160 248 186 220" fill="none" stroke="#a07c44" stroke-width="7"/><circle cx="160" cy="260" r="3.5" fill="#a07c44" stroke="none"/><circle cx="160" cy="300" r="3.5" fill="#a07c44" stroke="none"/></g>`},
+ {id:'hood',slot:'torso',name:'Moletom roxo',price:70,svg:tee('#7c5cff','#5a3bd6',{long:1,bottom:350,extra:`<path d="M116 206 Q160 252 204 206 L204 196 Q160 232 116 196Z" fill="#5a3bd6"/><path d="M150 242 V274 M170 242 V274" stroke="#fff" stroke-width="4" fill="none"/><rect x="128" y="296" width="64" height="26" rx="10" fill="#6a4be8" stroke-width="3"/>`})},
+ {id:'jeanj',slot:'torso',name:'Jaqueta jeans',price:90,svg:tee('#4b78b8','#2f5589',{long:1,bottom:350,extra:`<path d="M160 236 V350" stroke="#2f5589" stroke-width="4" fill="none"/><rect x="120" y="268" width="28" height="24" rx="3" fill="none" stroke="#2f5589" stroke-width="3.5"/><rect x="172" y="268" width="28" height="24" rx="3" fill="none" stroke="#2f5589" stroke-width="3.5"/>`})},
+ {id:'lab',slot:'torso',name:'Jaleco de cientista',price:110,svg:tee('#f4f8fc','#b8c7d9',{long:1,bottom:410,extra:`<path d="M160 236 V410" stroke="#b8c7d9" stroke-width="4" fill="none"/><rect x="172" y="320" width="28" height="24" rx="3" fill="none" stroke="#b8c7d9" stroke-width="3.5"/><circle cx="150" cy="268" r="3.8" fill="#b8c7d9" stroke="none"/><circle cx="150" cy="300" r="3.8" fill="#b8c7d9" stroke="none"/>`})},
+ {id:'soccer',slot:'torso',name:'Camisa de futebol',price:120,svg:tee('#1fb866','#ffd23f',{extra:`<path d="M78 268 L104 270 M216 270 L242 268" stroke="#ffd23f" stroke-width="9" fill="none"/><path d="M134 220 L160 258 L186 220" fill="none" stroke="#ffd23f" stroke-width="8" stroke-linejoin="round"/><path d="M160 270 V330" stroke="#ffd23f" stroke-width="5" opacity=".8" fill="none"/>`})},
  {id:'dressp',slot:'torso',name:'Vestido rosa',price:100,blocks:['legs'],svg:dress('#ff6fb5','#e0408f')},
  {id:'dressb',slot:'torso',name:'Vestido azul',price:100,blocks:['legs'],svg:dress('#5fa8ff','#2f80ed')},
+ {id:'ledj',slot:'torso',name:'Jaqueta tecnológica LED',price:500,svg:tee('#20284a','#0f1530',{long:1,bottom:352,extra:`<path d="M160 236 V352" stroke="#3df2ff" stroke-width="4" fill="none"/><path d="M122 262 H146 M174 262 H198 M120 296 H146 M174 296 H200" stroke="#3df2ff" stroke-width="4" fill="none"/><path d="M102 262 C92 280 90 296 94 312 M218 262 C228 280 230 296 226 312" stroke="#b66bff" stroke-width="4" fill="none"/><circle cx="160" cy="232" r="5" fill="#3df2ff" stroke="none"/>`})},
+ {id:'astro',slot:'torso',name:'Traje de astronauta',price:1200,blocks:['legs'],svg:`<g>${pants('#f4f8fc','#b8c7d9',470)}${tee('#f4f8fc','#b8c7d9',{long:1,bottom:346,extra:`<rect x="130" y="256" width="60" height="42" rx="8" fill="#20284a"/><circle cx="144" cy="270" r="5" fill="#3df2ff" stroke="none"/><circle cx="160" cy="270" r="5" fill="#ffd23f" stroke="none"/><circle cx="176" cy="270" r="5" fill="#e5484d" stroke="none"/><path d="M136 288 H184" stroke="#3df2ff" stroke-width="3" fill="none"/><rect x="74" y="266" width="32" height="12" rx="5" fill="#e5484d" stroke-width="3"/><rect x="214" y="266" width="32" height="12" rx="5" fill="#2f80ed" stroke-width="3"/>`})}</g>`},
  /* calças */
- {id:'jeans',slot:'legs',name:'Calça jeans',price:50,svg:pants('#4b78b8','#2f5589')},
+ {id:'jeans',slot:'legs',name:'Calça jeans',price:50,svg:pants('#4b78b8','#2f5589',470,`<path d="M124 372 H146 M174 372 H196" stroke="#2f5589" stroke-width="3" fill="none"/>`)},
  {id:'sweatp',slot:'legs',name:'Calça de moletom',price:50,svg:pants('#9aa7b5','#6f7e90')},
- {id:'shortr',slot:'legs',name:'Bermuda vermelha',price:40,svg:pants('#e5484d','#b3282d',414)},
- {id:'shortb',slot:'legs',name:'Bermuda de praia',price:45,svg:`<g>${pants('#2fb7c9','#1e8796',414)}<path d="M130 360 H150 M170 380 H190 M132 392 H152" stroke="#ffd23f" stroke-width="6" stroke-linecap="round"/></g>`},
- {id:'skirt',slot:'legs',name:'Saia xadrez',price:55,svg:`<g><path d="M116 336 L204 336 L222 410 L98 410Z" fill="#e5484d"/><path d="M122 336 L108 410 M146 336 L140 410 M174 336 L180 410 M198 336 L212 410 M110 372 H212 M104 392 H218" stroke="#fff" stroke-width="4" opacity=".55"/><rect x="116" y="336" width="88" height="10" fill="#b3282d"/></g>`},
+ {id:'shortr',slot:'legs',name:'Bermuda vermelha',price:40,svg:pants('#e5484d','#b3282d',416)},
+ {id:'shortb',slot:'legs',name:'Bermuda de praia',price:45,svg:pants('#2fb7c9','#1e8796',416,`<path d="M128 364 H148 M172 384 H192 M130 398 H150" stroke="#ffd23f" stroke-width="6" fill="none"/>`)},
+ {id:'skirt',slot:'legs',name:'Saia xadrez',price:55,svg:`<g><path d="M114 336 L206 336 L228 418 L92 418Z" fill="#e5484d"/><path d="M122 336 L106 418 M146 336 L140 418 M174 336 L180 418 M198 336 L214 418 M104 374 H216 M98 398 H222" stroke="#fff" stroke-width="4" opacity=".55" fill="none"/><rect x="114" y="336" width="92" height="12" fill="#b3282d"/></g>`},
+ {id:'techp',slot:'legs',name:'Calça tecnológica',price:300,svg:pants('#20284a','#0f1530',470,`<path d="M132 360 V440 M188 360 V440" stroke="#3df2ff" stroke-width="4" fill="none"/><path d="M126 396 H140 M180 396 H194" stroke="#b66bff" stroke-width="4" fill="none"/>`)},
  /* calçados */
- {id:'snw',slot:'feet',name:'Tênis branco',price:50,svg:shoeSneaker('#f4f7fb','#c5d0dd')},
+ {id:'snw',slot:'feet',name:'Tênis branco',price:50,svg:shoeSneaker('#f4f7fb','#c5d0dd','#8fa0b5')},
  {id:'snr',slot:'feet',name:'Tênis vermelho',price:55,svg:shoeSneaker('#e5484d','#f4f7fb')},
  {id:'rain',slot:'feet',name:'Bota de chuva',price:65,svg:shoeBoot('#ffd23f','#e0ae00')},
- {id:'flip',slot:'feet',name:'Chinelo verde',price:30,svg:`<g><ellipse cx="136" cy="492" rx="30" ry="13" fill="#1fb866"/><ellipse cx="184" cy="492" rx="30" ry="13" fill="#1fb866"/><path d="M118 488 Q136 470 154 488 M166 488 Q184 470 202 488" stroke="#ffd23f" stroke-width="7" fill="none" stroke-linecap="round"/></g>`},
- {id:'dshoe',slot:'feet',name:'Sapato social',price:60,svg:`<g><ellipse cx="136" cy="489" rx="31" ry="15" fill="#1c1c24"/><ellipse cx="184" cy="489" rx="31" ry="15" fill="#1c1c24"/><path d="M118 482 Q130 478 146 482 M174 482 Q190 478 202 482" stroke="#fff" stroke-width="3" opacity=".5" fill="none" stroke-linecap="round"/><path d="M105 496 H167 V502 H105Z M153 496 H215 V502 H153Z" fill="#000"/></g>`},
- {id:'cleat',slot:'feet',name:'Chuteira',price:80,svg:`<g><ellipse cx="136" cy="489" rx="31" ry="15" fill="#1c1c24"/><ellipse cx="184" cy="489" rx="31" ry="15" fill="#1c1c24"/><path d="M112 486 Q136 474 160 486 M160 486 Q184 474 208 486" stroke="#ffd23f" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M110 500 H166 V508 H110Z M154 500 H210 V508 H154Z" fill="#fff"/><path d="M118 508 v5 M136 508 v5 M154 508 v5 M166 508 v5 M184 508 v5 M202 508 v5" stroke="#fff" stroke-width="4"/></g>`},
+ {id:'flip',slot:'feet',name:'Chinelo verde',price:30,svg:`<g><ellipse cx="130" cy="494" rx="36" ry="15" fill="#1fb866"/><ellipse cx="190" cy="494" rx="36" ry="15" fill="#1fb866"/><path d="M108 490 Q130 466 152 490 M168 490 Q190 466 212 490" stroke="#ffd23f" stroke-width="9" fill="none"/></g>`},
+ {id:'dshoe',slot:'feet',name:'Sapato social',price:60,svg:`<g><ellipse cx="130" cy="491" rx="37" ry="17" fill="#1c1c24"/><ellipse cx="190" cy="491" rx="37" ry="17" fill="#1c1c24"/><path d="M108 484 Q122 478 142 484 M178 484 Q198 478 212 484" stroke="#fff" stroke-width="3.5" opacity=".5" fill="none"/><path d="M94 500 H166 V508 H94Z M154 500 H226 V508 H154Z" fill="#000"/></g>`},
+ {id:'cleat',slot:'feet',name:'Chuteira',price:80,svg:`<g><ellipse cx="130" cy="491" rx="37" ry="17" fill="#1c1c24"/><ellipse cx="190" cy="491" rx="37" ry="17" fill="#1c1c24"/><path d="M104 488 Q130 474 156 488 M164 488 Q190 474 216 488" stroke="#ffd23f" stroke-width="7" fill="none"/><path d="M96 502 H166 V510 H96Z M154 502 H224 V510 H154Z" fill="#fff"/><path d="M104 510 v6 M126 510 v6 M148 510 v6 M170 510 v6 M192 510 v6 M214 510 v6" stroke="#fff" stroke-width="4" fill="none"/></g>`},
+ {id:'ledsn',slot:'feet',name:'Tênis com luzes LED',price:400,svg:shoeSneaker('#20284a','#3df2ff','#b66bff')},
+ {id:'skate',slot:'feet',name:'Patins',price:600,svg:`<g>${[0,1].map(i=>{const t=i?'translate(320 0) scale(-1 1)':'';return`<g transform="${t}"><path d="M98 480 Q98 462 120 462 H148 Q170 464 170 482 L168 496 H100Z" fill="#e5484d"/><path d="M104 496 H168 V504 H104Z" fill="#fff"/><circle cx="116" cy="514" r="9" fill="#ffd23f"/><circle cx="152" cy="514" r="9" fill="#ffd23f"/><path d="M116 474 H142" stroke="#fff" stroke-width="3.5" fill="none"/></g>`;}).join('')}</g>`},
  /* costas */
- {id:'cape',slot:'back',name:'Capa de super-herói',price:100,back:`<path d="M110 200 C96 300 84 400 66 458 L254 458 C236 400 224 300 210 200Z" fill="#e5484d"/><path d="M130 220 C122 320 110 400 98 458 L130 458 C140 400 146 320 150 220Z" fill="#b3282d" opacity=".5"/>`,front:`<path d="M124 208 Q160 226 196 208" stroke="#ffc933" stroke-width="6" fill="none"/><circle cx="124" cy="208" r="8" fill="#ffc933"/><circle cx="196" cy="208" r="8" fill="#ffc933"/>`},
- {id:'pack',slot:'back',name:'Mochila escolar',price:80,back:`<rect x="92" y="220" width="136" height="124" rx="24" fill="#2f80ed"/><rect x="108" y="296" width="104" height="44" rx="12" fill="#1d5fd1"/><circle cx="160" cy="316" r="5" fill="#ffd23f"/>`,front:`<path d="M126 214 C118 260 120 300 128 336" stroke="#1d5fd1" stroke-width="13" fill="none" stroke-linecap="round"/><path d="M194 214 C202 260 200 300 192 336" stroke="#1d5fd1" stroke-width="13" fill="none" stroke-linecap="round"/>`},
- {id:'wings',slot:'back',name:'Asas de fada',price:130,back:`<g opacity=".85"><path d="M112 236 C30 130 6 250 108 290Z" fill="#c8b6ff" stroke="#9a82ff" stroke-width="3"/><path d="M112 276 C34 300 50 392 124 326Z" fill="#e3d8ff" stroke="#9a82ff" stroke-width="3"/><path d="M208 236 C290 130 314 250 212 290Z" fill="#c8b6ff" stroke="#9a82ff" stroke-width="3"/><path d="M208 276 C286 300 270 392 196 326Z" fill="#e3d8ff" stroke="#9a82ff" stroke-width="3"/></g>`},
- /* mãos */
- {id:'wiz',slot:'hand',name:'Varinha mágica',price:90,svg:`<g><path d="M226 330 L278 238" stroke="#8a5a2b" stroke-width="8" stroke-linecap="round"/>${star(282,228,20,'#ffd23f')}</g>`},
- {id:'balloon',slot:'hand',name:'Balão vermelho',price:40,svg:`<g><path d="M96 322 C82 280 72 232 72 192" stroke="#8895a7" stroke-width="3" fill="none"/><ellipse cx="72" cy="150" rx="34" ry="42" fill="#e5484d"/><ellipse cx="60" cy="134" rx="8" ry="12" fill="#fff" opacity=".45"/><path d="M72 192 L66 202 H78Z" fill="#b3282d"/></g>`},
- {id:'book',slot:'hand',name:'Livro de matemática',price:60,svg:`<g><rect x="214" y="298" width="62" height="50" rx="5" fill="#2f80ed"/><rect x="214" y="298" width="11" height="50" rx="3" fill="#1d5fd1"/><text x="250" y="332" font-size="24" fill="#fff" text-anchor="middle" font-weight="700" font-family="sans-serif">2×3</text></g>`},
- {id:'icecream',slot:'hand',name:'Sorvete',price:35,svg:`<g><path d="M212 336 L236 336 L224 394Z" fill="#d9a05b"/><circle cx="224" cy="322" r="17" fill="#ff9ac2"/><circle cx="224" cy="302" r="14" fill="#fff4d6"/><circle cx="224" cy="289" r="4" fill="#e5484d"/></g>`}
+ {id:'cape',slot:'back',name:'Capa de super-herói',price:100,back:`<path d="M96 206 C70 300 46 400 24 470 Q160 494 296 470 C274 400 250 300 224 206Z" fill="#e5484d"/><path d="M120 230 C100 330 78 410 60 466 L106 474 C122 410 134 330 142 232Z" fill="#b3282d" opacity=".5" stroke="none"/>`,front:`<path d="M118 214 Q160 240 202 214" stroke="#ffc933" stroke-width="8" fill="none"/><circle cx="118" cy="214" r="10" fill="url(#zgold)"/><circle cx="202" cy="214" r="10" fill="url(#zgold)"/>`},
+ {id:'pack',slot:'back',name:'Mochila escolar',price:80,back:`<rect x="62" y="196" width="196" height="170" rx="38" fill="#2f80ed"/><rect x="84" y="296" width="152" height="60" rx="18" fill="#1d5fd1"/><circle cx="160" cy="326" r="7" fill="#ffd23f"/><path d="M96 220 H224" stroke="#1d5fd1" stroke-width="8" fill="none"/>`,front:`<path d="M124 214 C114 262 116 304 126 344" stroke="${OL}" stroke-width="17" fill="none"/><path d="M124 214 C114 262 116 304 126 344" stroke="#1d5fd1" stroke-width="10" fill="none"/><path d="M196 214 C206 262 204 304 194 344" stroke="${OL}" stroke-width="17" fill="none"/><path d="M196 214 C206 262 204 304 194 344" stroke="#1d5fd1" stroke-width="10" fill="none"/>`},
+ {id:'wings',slot:'back',name:'Asas de fada',price:130,back:`<g opacity=".95"><path d="M104 236 C20 70 -6 250 100 296Z" fill="#c8b6ff"/><path d="M104 288 C16 316 34 420 124 340Z" fill="#e3d8ff"/><path d="M216 236 C300 70 326 250 220 296Z" fill="#c8b6ff"/><path d="M216 288 C304 316 286 420 196 340Z" fill="#e3d8ff"/><path d="M92 240 C60 170 40 190 50 240 M228 240 C260 170 280 190 270 240" stroke="#9a82ff" stroke-width="3" fill="none"/></g>`},
+ {id:'jet',slot:'back',name:'Mochila a jato (jetpack)',price:1000,back:`<g><rect x="52" y="206" width="58" height="150" rx="26" fill="url(#zmetal)"/><rect x="210" y="206" width="58" height="150" rx="26" fill="url(#zmetal)"/><rect x="52" y="250" width="58" height="16" fill="#e5484d"/><rect x="210" y="250" width="58" height="16" fill="#e5484d"/><path d="M60 356 H102 L94 380 H68Z" fill="url(#zdark)"/><path d="M218 356 H260 L252 380 H226Z" fill="url(#zdark)"/><path d="M66 380 Q74 430 81 470 Q90 430 96 380Z" fill="#ff9f1c"/><path d="M72 380 Q78 410 81 440 Q86 410 90 380Z" fill="#ffe27a" stroke="none"/><path d="M224 380 Q230 430 239 470 Q246 430 254 380Z" fill="#ff9f1c"/><path d="M230 380 Q236 410 239 440 Q244 410 248 380Z" fill="#ffe27a" stroke="none"/><path d="M110 226 H210" stroke="#1c1f2b" stroke-width="10" fill="none"/></g>`,front:`<path d="M126 214 C118 262 120 304 128 340 M194 214 C202 262 200 304 192 340" stroke="#1c1f2b" stroke-width="9" fill="none"/>`},
+ /* mãos (mão direita do Zeca) */
+ {id:'wiz',slot:'hand',name:'Varinha mágica',price:90,svg:`<g><path d="M230 338 L286 232" stroke="${OL}" stroke-width="13" stroke-linecap="round"/><path d="M230 338 L286 232" stroke="#8a5a2b" stroke-width="7" stroke-linecap="round"/>${star(290,222,24,'#ffd23f')}<circle cx="230" cy="338" r="16" fill="#6b3a1e"/></g>`},
+ {id:'balloon',slot:'hand',name:'Balão vermelho',price:40,svg:`<g><path d="M230 330 C242 290 252 240 252 196" stroke="#8895a7" stroke-width="3.5" fill="none"/><ellipse cx="252" cy="150" rx="38" ry="46" fill="#e5484d"/><ellipse cx="238" cy="132" rx="9" ry="14" fill="#fff" opacity=".45" stroke="none"/><path d="M252 196 L245 208 H259Z" fill="#b3282d"/><circle cx="230" cy="338" r="16" fill="#6b3a1e"/></g>`},
+ {id:'book',slot:'hand',name:'Livro de matemática',price:60,svg:`<g><rect x="206" y="294" width="72" height="58" rx="6" fill="#2f80ed"/><rect x="206" y="294" width="13" height="58" rx="4" fill="#1d5fd1"/><text x="248" y="332" font-size="27" fill="#fff" stroke="none" text-anchor="middle" font-weight="700" font-family="sans-serif">2×3</text><circle cx="230" cy="344" r="14" fill="#6b3a1e"/></g>`},
+ {id:'icecream',slot:'hand',name:'Sorvete',price:35,svg:`<g><path d="M216 300 L246 300 L231 346Z" fill="#d9a05b"/><path d="M222 310 L240 330 M240 310 L222 330" stroke="#a86f2d" stroke-width="2" fill="none"/><circle cx="231" cy="288" r="19" fill="#ff9ac2"/><circle cx="231" cy="266" r="16" fill="#fff4d6"/><circle cx="231" cy="251" r="5" fill="#e5484d"/><circle cx="230" cy="344" r="14" fill="#6b3a1e"/></g>`},
+ {id:'trophy',slot:'hand',name:'Troféu de campeão',price:1500,svg:`<g><path d="M200 226 H260 C260 274 250 296 230 300 C210 296 200 274 200 226Z" fill="url(#zgold)"/><path d="M200 238 C176 238 176 268 204 272 M260 238 C284 238 284 268 256 272" fill="none" stroke="#d99a00" stroke-width="8"/><rect x="222" y="300" width="16" height="22" fill="url(#zgold)"/><rect x="206" y="320" width="48" height="16" rx="5" fill="#a86f00"/>${star(230,258,14,'#fff')}<path d="M210 236 V270" stroke="#fff" stroke-width="5" opacity=".5" fill="none" stroke-linecap="round"/><circle cx="230" cy="344" r="15" fill="#6b3a1e"/></g>`},
+ /* pulso (direita) */
+ {id:'band',slot:'wrist',name:'Pulseira neon',price:90,svg:`<g transform="translate(231 318) scale(1.3) translate(-231 -318)"><rect x="212" y="304" width="38" height="12" rx="6" fill="url(#zneon)"/><rect x="214" y="320" width="34" height="9" rx="4.5" fill="url(#zneon)"/></g>`},
+ {id:'dwatch',slot:'wrist',name:'Relógio digital',price:180,svg:`<g transform="translate(231 318) scale(1.3) translate(-231 -318)"><rect x="213" y="296" width="36" height="38" rx="10" fill="#1c1f2b"/><rect x="216" y="306" width="30" height="18" rx="4" fill="#bff3c4" stroke-width="2"/><text x="231" y="320" font-size="12" fill="#14301a" stroke="none" text-anchor="middle" font-weight="700" font-family="monospace">12:30</text><rect x="212" y="316" width="6" height="8" fill="#e5484d" stroke="none"/></g>`},
+ {id:'swatch',slot:'wrist',name:'Smartwatch',price:350,svg:`<g transform="translate(231 318) scale(1.3) translate(-231 -318)"><rect x="215" y="292" width="32" height="12" rx="4" fill="#3b3f58"/><rect x="215" y="328" width="32" height="12" rx="4" fill="#3b3f58"/><rect x="208" y="300" width="46" height="34" rx="12" fill="#0f1530"/><circle cx="231" cy="317" r="11" fill="none" stroke="#3df2ff" stroke-width="3.5"/><path d="M231 317 V309" stroke="#fff" stroke-width="3" fill="none"/><circle cx="231" cy="317" r="2.6" fill="#ff7b8e" stroke="none"/></g>`},
+ /* tecnologia (mão esquerda) */
+ {id:'phone',slot:'tech',name:'Celular',price:250,svg:`<g transform="rotate(-10 90 300)"><rect x="66" y="258" width="46" height="82" rx="10" fill="url(#zdark)"/>${screen(71,266,36,62,5)}<circle cx="89" cy="334" r="2.6" fill="#fff" stroke="none"/><rect x="82" y="262" width="14" height="3" rx="1.5" fill="#0b0b12" stroke="none"/><path d="M78 290 L98 290 M78 300 L92 300" stroke="#fff" stroke-width="3" opacity=".7" fill="none"/><circle cx="92" cy="342" r="14" fill="#6b3a1e"/></g>`},
+ {id:'tablet',slot:'tech',name:'Tablet',price:400,svg:`<g transform="rotate(-14 90 300)"><rect x="34" y="262" width="104" height="76" rx="9" fill="url(#zdark)"/>${screen(41,269,90,62,4)}<path d="M52 318 V300 M66 318 V290 M80 318 V306 M94 318 V282 M108 318 V296" stroke="#fff" stroke-width="7" opacity=".75" fill="none" stroke-linecap="round"/><circle cx="92" cy="344" r="14" fill="#6b3a1e"/></g>`},
+ {id:'laptop',slot:'tech',name:'Notebook',price:600,svg:`<g transform="rotate(-8 90 300)"><path d="M44 234 H138 L132 304 H50Z" fill="url(#zdark)"/>${screen(52,242,78,54,3)}<path d="M62 282 L78 268 L92 276 L112 256" stroke="#fff" stroke-width="4" opacity=".8" fill="none" stroke-linecap="round"/><path d="M34 306 H148 L142 322 H40Z" fill="url(#zmetal)"/><path d="M80 314 H104" stroke="#7a8799" stroke-width="3" fill="none"/><circle cx="92" cy="338" r="14" fill="#6b3a1e"/></g>`},
+ {id:'console',slot:'tech',name:'Videogame portátil',price:750,svg:`<g transform="rotate(-8 90 300)"><rect x="30" y="274" width="120" height="58" rx="18" fill="#e5484d"/>${screen(58,281,64,44,4)}<circle cx="44" cy="298" r="7" fill="#20284a"/><path d="M134 288 v8 M130 292 h8" stroke="#fff" stroke-width="3" fill="none"/><circle cx="136" cy="310" r="4.5" fill="#ffd23f"/><circle cx="128" cy="318" r="4.5" fill="#2fb7c9"/><path d="M40 316 h10 M45 311 v10" stroke="#fff" stroke-width="3" fill="none"/><circle cx="92" cy="342" r="14" fill="#6b3a1e"/></g>`},
+ {id:'camera',slot:'tech',name:'Câmera fotográfica',price:450,svg:`<g transform="rotate(-6 90 300)"><rect x="46" y="278" width="88" height="56" rx="12" fill="url(#zdark)"/><rect x="60" y="268" width="26" height="14" rx="4" fill="#3b3f58"/><circle cx="96" cy="306" r="21" fill="#10243d"/><circle cx="96" cy="306" r="13" fill="url(#zscr)" stroke-width="2.5"/><circle cx="91" cy="300" r="4" fill="#fff" stroke="none"/><rect x="108" y="284" width="18" height="10" rx="3" fill="#ffe27a" stroke-width="2.5"/><circle cx="92" cy="342" r="14" fill="#6b3a1e"/></g>`}
 ];
 const ITEM=Object.fromEntries(ITEMS.map(i=>[i.id,i]));
-const SLOTS=[['head','🎩','Cabeça'],['face','🕶️','Rosto'],['neck','🧣','Pescoço'],['torso','👕','Roupas'],['legs','👖','Calças'],['feet','👟','Calçados'],['back','🦸','Costas'],['hand','🪄','Mãos']];
+document.body.insertAdjacentHTML('afterbegin',ZDEFS);
+const SLOTS=[['head','🎩','Cabeça'],['face','🕶️','Rosto'],['neck','🧣','Pescoço'],['torso','👕','Roupas'],['legs','👖','Calças'],['feet','👟','Calçados'],['back','🦸','Costas'],['hand','🪄','Mãos'],['wrist','⌚','Pulso'],['tech','💻','Tecnologia']];
+const TIERS=[[60,'Comum','#5b6b82','#e9eef5'],[150,'Raro','#1d5fd1','#e1edff'],[500,'Épico','#7a3fe0','#efe4ff'],[1e9,'Lendário','#a86f00','#fff1c4']];
+const tierOf=p=>TIERS.find(t=>p<=t[0]);
+const OW=s=>`<g stroke="${OL}" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round">${s}</g>`;
 function zecaSVG(outfit,crop='full',ht=''){
-  const its=(outfit||[]).map(id=>ITEM[id]).filter(Boolean),sl=s=>its.filter(i=>i.slot===s);
-  const back=its.filter(i=>i.back).map(i=>i.back).join(''),front=its.filter(i=>i.front).map(i=>i.front).join('');
-  const body=sl('legs').map(i=>i.svg).join('')+sl('feet').map(i=>i.svg).join('')+sl('torso').map(i=>i.svg).join('')+front+sl('neck').map(i=>i.svg).join('')+`<g class="zhead">${ZB_HEAD}${sl('face').map(i=>i.svg).join('')}${sl('head').map(i=>i.svg).join('')}</g>`+sl('hand').map(i=>i.svg).join('');
+  const its=(outfit||[]).map(id=>ITEM[id]).filter(Boolean),sl=s=>its.filter(i=>i.slot===s),w=a=>a.map(i=>OW(i.svg)).join('');
+  const back=its.filter(i=>i.back).map(i=>OW(i.back)).join(''),front=its.filter(i=>i.front).map(i=>OW(i.front)).join('');
+  const body=w(sl('legs'))+w(sl('feet'))+w(sl('torso'))+front+w(sl('neck'))+`<g class="zhead">${ZB_HEAD}${w(sl('face'))}${w(sl('head'))}</g>`+w(sl('wrist'))+w(sl('tech'))+w(sl('hand'));
   return`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${CROP[crop]||crop}" ${ht?`height="${ht}"`:''} role="img" aria-label="Zeca">${back}${ZB_TAILG}${ZB_BODY}${body}</svg>`;}
 function applyItem(list,id){const it=ITEM[id];if(!it)return list;const o=list.filter(x=>{const y=ITEM[x];if(!y)return false;if(y.slot===it.slot)return false;if((it.blocks||[]).includes(y.slot))return false;if((y.blocks||[]).includes(it.slot))return false;return true;});o.push(id);return o;}
 const mascot=(cls='')=>{const e=h('span',{class:'mascot '+cls});e.innerHTML=zecaSVG(S.outfit,cls.includes('sm')?'head':'full');return e;};
@@ -337,7 +407,8 @@ function wardrobeCard(){
     const btns=own?[h('button',{class:worn?'w':'p',onclick:()=>{S.outfit=worn?S.outfit.filter(x=>x!==it.id):applyItem(S.outfit,it.id);save();screenRewards();}},worn?'Tirar':'Vestir')]
       :[h('button',{class:trying?'w':'y',onclick:()=>{tryOn=trying?tryOn.filter(x=>x!==it.id):applyItem(tryOn,it.id);screenRewards();}},trying?'Parar de provar':'Provar'),
         h('button',{class:S.coins>=it.price?'o':'w',onclick:()=>{if(S.coins<it.price){toast('Faltam '+(it.price-S.coins)+' moedas — continue jogando!');return;}S.coins-=it.price;S.spent+=it.price;S.owned.push(it.id);S.outfit=applyItem(S.outfit,it.id);tryOn=tryOn.filter(x=>x!==it.id);SFX.win();confetti(18);save();updHeader();screenRewards();}},`Comprar 🪙 ${it.price}`)];
-    return h('div',{class:'icard'+(worn?' on':'')+(trying?' try':'')},th,h('div',{class:'iname'},it.name),worn?h('div',{class:'itag'},'✔ vestido'):trying?h('div',{class:'itag'},'👀 provando'):own?h('div',{class:'itag'},'seu'):null,...btns);}));
+    const tr=tierOf(it.price),prog=own?null:h('div',{class:'prog',title:`Você tem ${S.coins} de ${it.price} moedas`},h('i',{style:`width:${Math.min(100,Math.round(S.coins/it.price*100))}%;background:${tr[2]}`})),need=!own&&S.coins<it.price?h('div',{class:'small need'},`Faltam ${it.price-S.coins} 🪙`):null;
+    return h('div',{class:'icard'+(worn?' on':'')+(trying?' try':'')},h('div',{class:'tier',style:`background:${tr[3]};color:${tr[2]}`},tr[1]),th,h('div',{class:'iname'},it.name),prog,need,worn?h('div',{class:'itag'},'✔ vestido'):trying?h('div',{class:'itag'},'👀 provando'):own?h('div',{class:'itag'},'seu'):null,...btns);}));
   return h('div',{class:'card'},h('h3',{},`👗 Armário do Zeca · 🪙 ${S.coins}`),h('p',{class:'small'},'Visto de cabeça aos pés: escolha uma peça de cada região e use várias ao mesmo tempo. Preço fixo, sem sorteio e sem dinheiro de verdade. Dá para provar antes de comprar!'),
     h('div',{class:'wardrobe'},h('div',{class:'zbox'},prev,tryOn.length?h('div',{class:'itag'},'👀 Provando '+tryOn.length+' peça(s)'):null,h('div',{style:'display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px'},tryOn.length?h('button',{class:'w',onclick:()=>{tryOn=[];screenRewards();}},'Voltar ao normal'):null,S.outfit.length?h('button',{class:'w',onclick:()=>{S.outfit=[];save();screenRewards();}},'Tirar tudo'):null)),h('div',{},tabs,grid)));}
 
@@ -543,10 +614,12 @@ function askChoice(cfg){return new Promise(res=>{
     else if(wrong===2){const sp='Vamos entender juntos. '+cfg.h2;sayKid(sp);await modal([h('h2',{},'Vamos entender juntos 🧠'),h('div',{class:'ex',html:cfg.h2}),replayBtn(sp)],'Entendi!');const rb=btns.find(x=>x.o.v===cfg.correct);if(rb){rb.b.style.boxShadow='0 0 0 5px #1fb866';rb.b.style.opacity='1';}fb.innerHTML='Agora toque na resposta certa 👆';}
     else fb.innerHTML='Toque na resposta que está brilhando em verde 💚';
     busy=false;}},o.label);btns.push({o,b});box.append(b);});
+  if(cfg.options.some(o=>String(o.label).length>20)){box.style.flexDirection='column';box.style.alignItems='stretch';box.style.maxWidth='720px';box.style.margin='14px auto';btns.forEach(x=>x.b.style.minWidth='0');}
   stage.replaceChildren(h('div',{class:'fcard'},h('div',{style:'display:flex;align-items:center;justify-content:center;gap:12px'},zc,h('h2',{style:'margin:0'},cfg.title||'Vamos pensar!')),dots,
     cfg.text?h('div',{class:'ptext',style:'margin:12px auto'},cfg.text,h('button',{class:'w',style:'min-height:36px;padding:2px 10px;margin-left:8px',onclick:()=>sayKid(cfg.text)},'🔊')):null,
-    h('div',{style:'font-size:24px;font-weight:700;color:#7c5cff;margin-top:6px'},cfg.q),box,fb));
-  if(S.voice)say(cfg.text?cfg.text+' '+cfg.q:cfg.q);});}
+    cfg.big?h('div',{style:'font-size:92px;line-height:1.15;margin:6px 0'},cfg.big):null,
+    h('div',{style:'font-size:24px;font-weight:700;color:#7c5cff;margin-top:6px'},cfg.q),cfg.en?h('button',{class:'o',style:'margin:8px 0',onclick:()=>speakEn(cfg.en)},'🔊 Listen'):null,box,fb));
+  if(cfg.en&&S.sound)setTimeout(()=>speakEn(cfg.en),350);else if(S.voice)say(cfg.text?cfg.text+' '+cfg.q:cfg.q);});}
 const CUE={mult:'Quando falamos de grupos iguais, de "cada", "vezes", "dobro" ou "triplo", usamos a <b>multiplicação</b>.',add:'Quando juntamos quantidades ("juntos", "no total", "ganhou"), usamos a <b>soma</b>.',sub:'Quando queremos saber quanto sobrou, quanto falta ou "quantos a mais", usamos a <b>subtração</b>.',div:'Quando repartimos igualmente ou perguntamos quantas vezes cabe, usamos a <b>divisão</b>.'};
 const OPNAME={add:'soma',sub:'subtração',mult:'multiplicação',div:'divisão'};
 const chooseOp=(pr,part,ctx)=>askChoice({title:'Problema',ctx,text:pr.text,q:part.q||'Que conta resolve o problema?',correct:part.op,
@@ -679,13 +752,13 @@ const HUBS={mult:{title:'✖️ Multiplicação',cards:[['mult','✏️','Contas
  div:{title:'➗ Divisão',cards:[['div','✏️','Contas no caderno','Divisão exata e com resto, até 999'],['dfac','✂️','Metade, terço, quarto…','Partes iguais, até a décima parte'],['dq','🧮','Quantas vezes cabe?','Dividendos até 999, com sobra']]}};
 const hubOf=kind=>Object.keys(HUBS).find(g=>HUBS[g].cards.some(c=>c[0]===kind));
 function screenHub(g){running=false;const H=HUBS[g];
-  stage.replaceChildren(h('button',{class:'w',onclick:screenHome},'⬅ Início'),h('h1',{},H.title),h('p',{},'Escolha um módulo. Cada um tem 4 níveis, com estrelas, medalhas e moedas.'),
+  stage.replaceChildren(h('button',{class:'w',onclick:screenMath},'⬅ Matemática'),h('h1',{},H.title),h('p',{},'Escolha um módulo. Cada um tem 4 níveis, com estrelas, medalhas e moedas.'),
     h('div',{class:'levels'},H.cards.map(([k,e,t,d])=>{const L=S.lvl[k],done=L.filter(x=>x.done).length,stars=L.reduce((a,x)=>a+x.best,0);
       return h('div',{class:'lv'},h('div',{style:'font-size:46px'},e),h('b',{style:'font-size:21px'},t),h('div',{class:'small'},d),h('div',{class:'med',style:'font-size:20px'},done?`${done}/4 níveis · ⭐ ${stars}`:'Novo!'),h('button',{class:'g',onclick:()=>screenLevels(k)},'Abrir'));})));}
 function screenLevels(kind){
   running=false;const nm={mult:'Multiplicação: contas no caderno ✖️',div:'Divisão: contas no caderno ➗',add:'Adição ➕',sub:'Subtração ➖',mfac:'Dobro, triplo, quádruplo… ✨',dfac:'Metade, terço, quarto… ✂️',dq:'Quantas vezes cabe? 🧮',pm1:'Problemas do dia a dia 🧩',pm2:'Problemas com dobro, triplo e comparações 🧠'}[kind];
   const list=S.lvl[kind];
-  const hub=hubOf(kind);stage.replaceChildren(h('button',{class:'w',onclick:()=>hub?screenHub(hub):screenHome()},'⬅ Voltar'),h('h1',{},nm),h('p',{},kind.startsWith('pm')?'Cada nível tem 5 problemas: primeiro você escolhe a conta certa e depois resolve no caderno. Há estrelas, moedas e um intervalo divertido no meio.':'Cada nível tem 5 exercícios no caderno, com estrelas, moedas e um intervalo divertido no meio.'),
+  const hub=hubOf(kind);stage.replaceChildren(h('button',{class:'w',onclick:()=>hub?screenHub(hub):screenMath()},'⬅ Voltar'),h('h1',{},nm),h('p',{},kind.startsWith('pm')?'Cada nível tem 5 problemas: primeiro você escolhe a conta certa e depois resolve no caderno. Há estrelas, moedas e um intervalo divertido no meio.':'Cada nível tem 5 exercícios no caderno, com estrelas, moedas e um intervalo divertido no meio.'),
     h('div',{class:'levels'},list.map((l,i)=>{const open=i===0||list[i-1].done;const med=l.best>=13?'🥇':l.best>=9?'🥈':l.best>0?'🥉':'';
       return h('div',{class:'lv'+(open?'':' locked')},h('div',{class:'n'},`Nível ${i+1}`),h('div',{class:'small'},LVL_TXT[kind][i]),h('div',{class:'med'},open?med:'🔒'),h('button',{class:open?'g':'w',onclick:()=>open&&playLevel(kind,i+1)},open?(l.tries?'Jogar de novo':'Jogar'):'Bloqueado'));})),
     (kind==='add'||kind==='sub')?h('div',{class:'card',style:'margin-top:14px;text-align:center'},h('h3',{},'⚡ Relâmpago de '+(kind==='add'?'somas':'subtrações')),h('p',{class:'small'},'10 contas de cabeça, contra o relógio. As que você erra voltam logo.'),h('div',{class:'chips'},h('button',{class:'o',onclick:async()=>{await actFacts({mode:'timed',tables:[10],count:10,op:kind==='add'?'+':'-'});screenLevels(kind);}},'Até 10'),h('button',{class:'r',onclick:async()=>{await actFacts({mode:'timed',tables:[20],count:10,op:kind==='add'?'+':'-'});screenLevels(kind);}},'Até 20'))):null,
@@ -948,7 +1021,7 @@ async function startMission(track='md'){
     if(!paused&&Date.now()-t0>30*60000){paused=true;await pause();}
     await new Promise(res=>{stage.replaceChildren(h('div',{class:'card',style:'text-align:center'},mascot(),h('h2',{},`Missão ${i+1} de ${plan.length}`),h('div',{style:'font-size:56px'},plan[i].e),h('h2',{},plan[i].t),h('p',{class:'small'},`Cerca de ${plan[i].m} minuto(s)`),h('div',{class:'tbar'},h('i',{style:`width:${i/plan.length*100}%;background:var(--purple)`})),h('button',{class:'g',onclick:res},'Vamos! 🚀')));});
     await plan[i].run();}
-  screenHome();}
+  screenMath();}
 function pause(){return new Promise(res=>{let s=20;const b=h('button',{class:'g',disabled:'true'},`Voltar em ${s}s`);const o=$('#overlay');o.hidden=false;o.replaceChildren(h('div',{class:'modal'},h('h2',{},'Pausa para o corpo! 🧘'),h('div',{class:'big'},'💧'),h('p',{},'Beba água, alongue os braços e olhe para longe por alguns segundos. O cérebro aprende melhor depois de uma pausa.'),b));
   const iv=setInterval(()=>{s--;if(s<=0){clearInterval(iv);b.disabled=false;b.removeAttribute('disabled');b.textContent='Voltar ao jogo ➜';b.onclick=()=>{o.hidden=true;o.replaceChildren();res();};}else b.textContent=`Voltar em ${s}s`;},1000);});}
 
@@ -1018,6 +1091,7 @@ function screenSessions(){running=false;const ss=S.sessions.slice(-10).reverse()
   stage.replaceChildren(h('button',{class:'w',onclick:panelParents},'⬅ Voltar ao painel'),h('h1',{},'📊 Últimas sessões de '+S.name),
     h('div',{class:'card'},h('h3',{},'Acumulado'),h('p',{},`⭐ ${S.stars} estrelas · 🪙 ${earned} moedas ganhas (${S.coins} na carteira) · Nível ${lvlOf(S.xp)} · Tempo total ${Math.round(S.ms/60000)} min`),
       ss.length?h('p',{},`${ss.length>1?'Nas últimas '+ss.length+' sessões':'Na última sessão'}: ${Math.round(tot.sec/60)} min dedicados e ${pct(tot.ok,tot.err)} de acertos.`):null),
+    studyCard(),
     h('div',{class:'card',style:'margin-top:14px;overflow:auto'},h('p',{class:'small'},'Uma sessão começa quando o jogo é aberto. "Acertos" contam cada passo da conta, tabuada, balão e questão de prova.'),
       ss.length?h('table',{class:'st'},h('tr',{},['Data e hora','Tempo','% de acertos','Acertos / total','⭐ ganhas','🪙 ganhas'].map(x=>h('th',{},x))),ss.map(x=>h('tr',{},h('td',{},new Date(x.t).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})),h('td',{},x.sec>=60?Math.round(x.sec/60)+' min':x.sec+' s'),h('td',{},h('b',{},pct(x.ok,x.err))),h('td',{},`${x.ok} / ${x.ok+x.err}`),h('td',{},'+'+x.stars),h('td',{},'+'+x.coins)))):h('p',{},'Ainda sem sessões registradas. Jogue um pouco e volte aqui!')));}
 /* ============ pódio e jogadores ============ */
@@ -1050,11 +1124,333 @@ function screenPodium(){running=false;
       h('p',{class:'small'},'Como o pódio funciona: a pontuação é o total de ⭐ e de 🪙 ganhos (gastar moedas na loja não tira você do ranking). Hoje ele compara os jogadores deste aparelho. Para comparar com outras crianças pela internet será preciso um servidor e a autorização dos pais (LGPD/COPPA), com apelidos apenas; os dados de cada jogador já têm essa estrutura (identificador, apelido, estrelas e moedas).')));}
 
 /* ============ início ============ */
+/* ============ conteúdo de estudo (3º ano) — baseado nos assuntos do calendário de provas ============ */
+const C=(q,a,w,h,x,ex)=>Object.assign({q,o:[a,...w],a:0,h:h||'Pense com calma e leia as opções de novo.',x:x||('A resposta certa é: <b>'+a+'</b>.')},ex||{});
+const V=(s,t,x,h)=>({q:'Verdadeiro ou falso?',text:s,o:['Verdadeiro','Falso'],a:t?0:1,fix:1,h:h||'Releia a frase com atenção e pense no que você estudou.',x:x||(t?'É verdadeiro mesmo!':'É falso.')});
+const K=(item,cats,ci,x,h)=>({q:'Onde "'+item+'" se encaixa?',o:cats,a:ci,fix:1,h:h||'Lembre das características de cada grupo.',x:x||('"'+item+'" é <b>'+cats[ci]+'</b>.')});
+const POOL=(cats,items,hint)=>({cats,items,hint});
+const PROVAS=[{d:'2026-10-27',s:'por'},{d:'2026-10-29',s:'cie'},{d:'2026-11-05',s:'mat'},{d:'2026-11-10',s:'his'},{d:'2026-11-12',s:'geo'},{d:'2026-11-17',s:'ing'}];
+const SUBJ={
+his:{id:'his',n:'História',e:'🏛️',bg:'linear-gradient(135deg,#ffb86b,#e0822c)',book:'Caderno 3 · Módulos 9 e 10',
+ topics:[
+ {id:'h1',m:'Módulo 9 · Dividindo espaços em comunidade',t:'Espaços públicos e espaços privados',e:'🏞️',pg:'páginas 8 a 11',
+  cards:[['Os espaços onde vivemos','Onde a gente vive existem vários espaços: casas, ruas, praças, escolas, lojas… Alguns são <b>de todos</b> e outros têm <b>dono</b>.','🏘️'],
+   ['Espaço público','É um espaço <b>de todos</b>. Qualquer pessoa pode usar, respeitando as regras. Quem cuida dele é o governo, a <b>prefeitura</b>, com o dinheiro dos impostos.<br>Exemplos: praça, rua, calçada, parque, praia, escola pública, biblioteca pública.','🌳'],
+   ['Espaço privado','É um espaço que tem <b>dono</b> (uma pessoa, uma família ou uma empresa). Só entra quem o dono deixa, e ele decide as regras.<br>Exemplos: a sua casa, o seu quarto, uma loja, uma escola particular, um clube particular.','🏠'],
+   ['Para lembrar','<b>Público = de todos.</b> <b>Privado = de alguém.</b><br>Nos dois existem regras, e todos precisam cuidar para o espaço continuar bom.','✅']],
+  q:[C('Um espaço público é um lugar…','que pode ser usado por todas as pessoas',['que só o dono pode usar','que só crianças podem usar','que ninguém pode usar'],'Pense: "público" quer dizer "de todos".','Espaço público é o que pertence a todos e pode ser usado por qualquer pessoa, respeitando as regras.'),
+   C('Qual destes é um espaço privado?','A casa de uma família',['A praça da cidade','A calçada','A praia'],'Procure o lugar que tem dono.','A casa de uma família tem dono: é um espaço privado.'),
+   C('Quem cuida das praças, das ruas e dos parques da cidade?','A prefeitura',['Só o dono de uma loja','Só uma pessoa da rua','Ninguém'],'Pense no governo do município.','A prefeitura cuida dos espaços públicos, com o dinheiro dos impostos.'),
+   C('Em um espaço privado, quem decide quem pode entrar?','O dono',['Qualquer pessoa','O prefeito','Os vizinhos'],'Lembre que o espaço privado tem dono.','No espaço privado, quem decide é o dono.'),
+   C('Por que existem regras nos espaços públicos?','Para todos poderem usar e conviver bem',['Para ninguém poder usar','Para deixar o lugar sujo','Para só adultos entrarem'],'Pense em convivência.','As regras ajudam todos a usar o espaço e conviver bem.'),
+   V('A rua é um espaço público.',true,'A rua é de todos, por isso é um espaço público.'),
+   V('O quarto de uma criança é um espaço público.',false,'O quarto é da família que mora na casa: é um espaço privado.'),
+   V('Em espaço público não precisa ter regras.',false,'Sempre há regras para todos conviverem bem: não jogar lixo, respeitar as pessoas…'),
+   V('Um parque da cidade pode ser usado por todos.',true,'Parque da cidade é espaço público: é de todos.')],
+  k:POOL(['Espaço público','Espaço privado'],[['praça',0],['rua',0],['parque da cidade',0],['praia',0],['calçada',0],['biblioteca pública',0],['escola pública',0],['sua casa',1],['seu quarto',1],['loja de roupas',1],['escola particular',1],['quintal de uma casa',1],['clube particular',1],['consultório particular',1]],'Pergunta-chave: é de todos ou tem dono?')},
+ {id:'h2',m:'Módulo 9 · Dividindo espaços em comunidade',t:'Os espaços públicos da sua cidade',e:'🏙️',pg:'páginas 11 e 12',
+  cards:[['Espaços públicos da cidade','Em uma cidade existem muitos espaços públicos: <b>praças, parques, ruas, calçadas, escolas, bibliotecas, postos de saúde, quadras</b>.','🏙️'],
+   ['Para que servem?','• <b>Lazer</b>: praça, parque, quadra.<br>• <b>Estudo</b>: escola e biblioteca.<br>• <b>Saúde</b>: posto de saúde.<br>• <b>Circular</b>: ruas e calçadas.','🎠'],
+   ['Como cuidar','Jogar o lixo na lixeira, não pichar nem quebrar, respeitar as pessoas e <b>avisar um adulto ou a prefeitura</b> quando algo estiver estragado.','🧹'],
+   ['Tarefa para você','Pergunte a um adulto quais são os espaços públicos do seu bairro e para que cada um serve. Depois conte para o Zeca!','🔎']],
+  q:[C('Para que serve uma biblioteca pública?','Para ler, estudar e pegar livros emprestados',['Para vender roupas','Para guardar carros','Para plantar árvores'],'Pense em livros.','A biblioteca pública é um espaço para ler e estudar, aberto a todos.'),
+   C('Em qual lugar as pessoas podem passear, brincar e descansar?','Na praça',['Dentro de uma loja fechada','Na garagem de uma casa','No consultório'],'Pense em um espaço público de lazer.','A praça é um espaço público de lazer.'),
+   C('Para que servem as calçadas?','Para as pessoas andarem com segurança',['Para guardar móveis','Para plantar uma horta','Para estacionar aviões'],'Quem anda a pé usa o quê?','As calçadas são o lugar de as pessoas andarem com segurança.'),
+   C('Para que serve o posto de saúde?','Para cuidar da saúde das pessoas',['Para vender sorvete','Para treinar futebol','Para guardar livros'],'Pense em médicos e enfermeiros.','O posto de saúde atende as pessoas que precisam de cuidados.'),
+   C('Qual atitude ajuda a cuidar da praça?','Jogar o lixo na lixeira',['Pichar os bancos','Quebrar as plantas','Deixar lixo no chão'],'Escolha a atitude que deixa o lugar bom para todos.','Usar a lixeira mantém a praça limpa para todos.'),
+   V('Pichar a parede de uma escola pública é cuidar do espaço de todos.',false,'Pichar estraga o espaço que é de todos.'),
+   V('Se um banco da praça está quebrado, podemos avisar a prefeitura.',true,'Avisar ajuda a consertar o espaço.'),
+   V('O parque da cidade é um espaço de lazer.',true,'É onde as pessoas passeiam, brincam e se divertem.')],
+  k:POOL(['Lazer','Estudo','Saúde'],[['praça',0],['parque',0],['quadra esportiva',0],['escola',1],['biblioteca',1],['posto de saúde',2],['hospital público',2]],'Pense no que as pessoas fazem lá.')},
+ {id:'h3',m:'Módulo 10 · Espaços públicos e privados',t:'Quem usa, quem cuida: regras, direitos e deveres',e:'🤝',pg:'páginas 20 a 22',
+  cards:[['Quem usa e quem cuida','No espaço <b>público</b>, todos usam e a <b>prefeitura</b> cuida (mas todos ajudam!). No espaço <b>privado</b>, o <b>dono</b> usa e cuida.','🛠️'],
+   ['Regras para conviver','Nos espaços públicos: respeitar os outros, manter a limpeza, esperar a vez. Nos espaços privados: respeitar as regras da casa, da loja ou do clube.','📏'],
+   ['Direitos e deveres','<b>Direito</b>: poder usar os espaços públicos.<br><b>Dever</b>: cuidar deles e respeitar as pessoas.','⚖️'],
+   ['Para lembrar','O espaço público é de todos, então o cuidado também é de todos.','💚']],
+  q:[C('Quem cuida de uma casa?','Os moradores, que são os donos',['A prefeitura','Qualquer pessoa da rua','Ninguém'],'A casa é espaço privado.','Quem cuida do espaço privado é o dono.'),
+   C('Qual é um DEVER de quem usa uma praça?','Manter a praça limpa',['Levar os brinquedos do parquinho para casa','Quebrar os bancos','Fazer barulho a noite toda'],'Dever é o que devemos fazer para cuidar.','Manter o lugar limpo é um dever de todos.'),
+   C('Qual é um DIREITO de todos nos espaços públicos?','Poder usá-los',['Estragar o que quiser','Ser dono de tudo','Impedir os outros de entrar'],'Direito é o que podemos fazer.','Todos têm o direito de usar os espaços públicos.'),
+   C('Se todos jogarem lixo no chão da praça, o que acontece?','A praça fica suja e ruim para todos',['A praça fica mais bonita','Nada muda','A praça vira uma casa'],'Pense na limpeza.','Lixo no chão estraga o espaço de todos.'),
+   C('Uma loja é um espaço…','privado, e o dono decide as regras',['público, de todos','da prefeitura','sem regras'],'A loja tem dono.','A loja é espaço privado.'),
+   V('Cuidar de um espaço público é dever de todos.',true,'O espaço é de todos, então todos devem cuidar.'),
+   V('Nos espaços privados não existem regras.',false,'O dono pode ter regras, como as regras da casa ou do clube.'),
+   V('Esperar a vez no escorregador da praça é uma boa regra de convivência.',true,'Esperar a vez ajuda todos a brincar bem.')],
+  k:POOL(['A prefeitura','O dono'],[['praça',0],['rua',0],['parque público',0],['calçada',0],['seu quarto',1],['uma loja',1],['clube particular',1],['casa de um vizinho',1]],'Pergunta-chave: o espaço é de todos ou tem dono?')},
+ {id:'h4',m:'Módulo 10 · Espaços públicos e privados',t:'Serviços públicos e serviços privados',e:'🚒',pg:'página 23',
+  cards:[['O que é um serviço?','Serviço é um trabalho que ajuda as pessoas e atende o que elas precisam: cuidar da saúde, limpar a rua, ensinar, cortar cabelo…','🛎️'],
+   ['Serviços públicos','São oferecidos pelo <b>governo</b> para todos e pagos com os <b>impostos</b>.<br>Exemplos: coleta de lixo, limpeza das ruas, iluminação das ruas, escola pública, posto de saúde, bombeiros, polícia.','🚒'],
+   ['Serviços privados','São oferecidos por <b>empresas ou pessoas</b>, e a gente <b>paga</b> a quem presta o serviço.<br>Exemplos: salão de beleza, padaria, escola particular, clínica particular, oficina mecânica.','💈'],
+   ['Para lembrar','<b>Público</b> = governo, para todos. <b>Privado</b> = empresa ou pessoa, a gente paga.','✅']],
+  q:[C('Quem oferece os serviços públicos?','O governo, como a prefeitura',['Só as lojas','Só uma família','Um clube particular'],'Pense em quem cuida da cidade.','Os serviços públicos são oferecidos pelo governo.'),
+   C('Qual destes é um serviço público?','A coleta de lixo',['Um salão de beleza','Uma sorveteria','Uma oficina mecânica'],'Procure o que a prefeitura faz para todos.','A coleta de lixo é um serviço público.'),
+   C('Qual destes é um serviço privado?','Uma clínica particular',['A iluminação das ruas','O corpo de bombeiros','A coleta de lixo'],'Procure um serviço que a pessoa paga diretamente.','A clínica particular é de uma empresa: serviço privado.'),
+   C('Com que dinheiro o governo paga os serviços públicos?','Com os impostos pagos pela população',['Só com dinheiro de doações','Sem gastar dinheiro','Só com dinheiro do prefeito'],'Lembre de onde vem o dinheiro dos impostos.','O governo usa os impostos para pagar os serviços públicos.'),
+   V('A iluminação das ruas é um serviço público.',true,'É oferecida para todos pela prefeitura.'),
+   V('Escola particular é um serviço público.',false,'A escola particular é paga e oferecida por uma empresa ou pessoa: serviço privado.'),
+   V('Um corte de cabelo no salão é um serviço privado.',true,'A gente paga ao salão: serviço privado.')],
+  k:POOL(['Serviço público','Serviço privado'],[['coleta de lixo',0],['iluminação das ruas',0],['posto de saúde',0],['corpo de bombeiros',0],['escola pública',0],['limpeza das ruas',0],['salão de beleza',1],['padaria',1],['clínica particular',1],['restaurante',1],['oficina mecânica',1],['escola particular',1]],'Pergunta-chave: quem oferece? O governo ou uma empresa?')}
+ ]},
+geo:{id:'geo',n:'Geografia',e:'🗺️',bg:'linear-gradient(135deg,#7fd4ff,#2f80ed)',book:'Caderno 3 · Módulos 9, 10 e 11',
+ topics:[
+ {id:'g1',m:'Módulo 9 · Conhecendo o município',t:'O que é município?',e:'🏘️',pg:'páginas 56 a 59',
+  cards:[['O Brasil e suas divisões','O Brasil é dividido em <b>estados</b>, e cada estado é dividido em <b>municípios</b>.','🇧🇷'],
+   ['O município','O município tem uma parte <b>urbana</b> (a cidade) e uma parte <b>rural</b> (o campo). É um território com a sua população e o seu governo.','🏘️'],
+   ['Quem governa','O <b>prefeito</b> administra o município e cuida dos serviços. Os <b>vereadores</b> fazem as leis do município e fiscalizam o prefeito. Todos são escolhidos pelo <b>voto</b>.','🗳️'],
+   ['Onde trabalham','O prefeito trabalha na <b>prefeitura</b>. Os vereadores trabalham na <b>Câmara Municipal</b>.','🏛️']],
+  q:[C('O Brasil é dividido em estados, e os estados são divididos em…','municípios',['países','continentes','oceanos'],'Pense: Brasil → estados → ?','Os estados são divididos em municípios.'),
+   C('Quem administra o município?','O prefeito',['O presidente do Brasil','O governador','Um professor'],'O nome começa com "pre".','O prefeito administra o município.'),
+   C('Quem faz as leis do município?','Os vereadores',['Os bombeiros','Os médicos','Os motoristas'],'Eles trabalham na Câmara Municipal.','Os vereadores fazem as leis do município e fiscalizam o prefeito.'),
+   C('Onde os vereadores trabalham?','Na Câmara Municipal',['Na escola','No hospital','Na padaria'],'O nome do lugar tem a palavra "Câmara".','Os vereadores trabalham na Câmara Municipal.'),
+   C('Onde o prefeito trabalha?','Na prefeitura',['Na Câmara Municipal','No supermercado','Na biblioteca'],'Prefeito e ... ','O prefeito trabalha na prefeitura.'),
+   C('O que forma um município?','A área urbana e a área rural juntas',['Só a cidade','Só o campo','Só as praias'],'O município tem duas partes.','O município é formado pela parte urbana e pela parte rural.'),
+   V('O prefeito e os vereadores são escolhidos pelo voto da população.',true,'Os moradores votam para escolher quem vai governar.'),
+   V('Todos os municípios têm o mesmo tamanho.',false,'Há municípios pequenos e grandes.')],
+  k:null},
+ {id:'g2',m:'Módulo 9 · Conhecendo o município',t:'Município e cidade: qual é a diferença?',e:'🏙️',pg:'página 60',
+  cards:[['Cidade','A <b>cidade</b> é a <b>área urbana</b> do município: tem prédios, casas, ruas asfaltadas, lojas, escolas e a prefeitura.','🏙️'],
+   ['Município','O <b>município</b> é maior: tem a <b>cidade</b> (área urbana) <b>e</b> a <b>área rural</b> (o campo).','🏘️'],
+   ['Sede do município','A cidade onde fica a prefeitura é a <b>sede</b> do município.','📍'],
+   ['Para lembrar','<b>Município = cidade + campo.</b> A cidade é só uma parte do município.','✅']],
+  q:[C('A cidade é a parte … do município.','urbana',['rural','marítima','florestal'],'Cidade tem prédios, ruas e lojas.','A cidade é a área urbana do município.'),
+   C('O que o município tem a mais que a cidade?','A área rural, o campo',['Só mais prédios','Só mais praias','Nada'],'Município = cidade + ?','O município inclui a área rural.'),
+   C('Onde fica a prefeitura?','Na cidade, a sede do município',['Em uma plantação','No meio da floresta','Em um rio'],'A prefeitura fica na área urbana.','A prefeitura fica na cidade, a sede do município.'),
+   V('Cidade e município são sempre exatamente a mesma coisa.',false,'O município é maior: tem a cidade e a área rural.'),
+   V('A cidade é a área urbana do município.',true,'Isso mesmo!')],
+  k:POOL(['Área urbana (cidade)','Área rural (campo)'],[['prédios',0],['avenida com semáforos',0],['lojas e supermercados',0],['prefeitura',0],['plantação de milho',1],['fazenda de gado',1],['sítio com horta',1],['estrada de terra entre pastos',1]],'Pense: tem muita gente e construções, ou muita natureza e plantações?')},
+ {id:'g3',m:'Módulo 9 · Conhecendo o município',t:'A área rural do município',e:'🌾',pg:'páginas 62 e 63',
+  cards:[['O campo','Na <b>área rural</b> moram menos pessoas, as casas ficam mais afastadas e há muita natureza: sítios, fazendas, plantações e pastos.','🌾'],
+   ['O que o campo produz','Alimentos e matérias-primas: leite, carne, ovos, frutas, verduras, milho, soja, arroz, café…','🥛'],
+   ['Vida no campo','As pessoas trabalham plantando e criando animais. Os caminhos são, muitas vezes, estradas de terra.','🚜'],
+   ['Campo e cidade se ajudam','O campo envia alimentos para a cidade. A cidade oferece serviços e produtos para o campo.','🔄']],
+  q:[C('Onde vivem menos pessoas e as casas são mais afastadas?','Na área rural',['No centro da cidade','Em um prédio','Em um shopping'],'Pense no campo.','Na área rural há menos moradores e mais espaço.'),
+   C('Qual destes produtos vem do campo?','Leite',['Televisão','Celular','Carro'],'Procure um alimento.','O leite vem do campo, onde se criam as vacas.'),
+   C('Onde fica uma plantação de milho?','Na área rural',['No meio de um prédio','Dentro de uma loja','Na biblioteca'],'Plantações precisam de bastante terra.','As plantações ficam, em geral, na área rural.'),
+   C('Como campo e cidade se ajudam?','O campo envia alimentos, e a cidade oferece serviços e produtos',['Não se ajudam','Só a cidade ajuda o campo','Só o campo ajuda a cidade'],'Pense nas duas direções.','Um depende do outro: alimentos do campo, serviços e produtos da cidade.'),
+   V('Todos os alimentos que comemos vêm só da cidade.',false,'Muitos alimentos vêm do campo.'),
+   V('No campo, as pessoas trabalham com plantações e criação de animais.',true,'São atividades comuns na área rural.')],
+  k:null},
+ {id:'g4',m:'Módulo 9 · Conhecendo o município',t:'Atividades econômicas do campo e da cidade',e:'🏭',pg:'páginas 64 a 69',
+  cards:[['Atividades econômicas','São os trabalhos que <b>produzem, vendem ou oferecem</b> algo e que geram renda para as pessoas.','💼'],
+   ['No campo','<b>Agricultura</b>: plantar (milho, feijão, café).<br><b>Pecuária</b>: criar animais (gado, porcos, galinhas).<br><b>Extrativismo</b>: retirar da natureza (madeira, látex, açaí).','🌽'],
+   ['Na cidade','<b>Comércio</b>: comprar e vender (lojas, mercados).<br><b>Indústria</b>: transforma matéria-prima em produtos (fábricas).<br><b>Serviços</b>: ajudar as pessoas (professor, médico, motorista).','🏬'],
+   ['Da matéria-prima ao produto','O trigo (matéria-prima) vira farinha na indústria, e a farinha vira pão. Cada etapa envolve trabalho de muitas pessoas.','🍞']],
+  q:[C('Plantar milho, feijão e café é…','agricultura',['pecuária','indústria','comércio'],'Plantar = agri…','Plantar é agricultura.'),
+   C('Criar gado, porcos e galinhas é…','pecuária',['agricultura','comércio','serviços'],'Criar animais.','Criar animais é pecuária.'),
+   C('Transformar matéria-prima em produtos é trabalho da…','indústria',['agricultura','pecuária','educação'],'Fábricas fazem isso.','A indústria transforma matéria-prima em produtos.'),
+   C('Vender produtos em uma loja é…','comércio',['indústria','agricultura','extrativismo'],'Comprar e vender.','Vender é comércio.'),
+   C('Professor, médico e motorista trabalham com…','serviços',['agricultura','pecuária','extrativismo'],'Eles ajudam as pessoas.','Quem ajuda as pessoas com seu trabalho presta serviços.'),
+   C('Retirar madeira, látex ou açaí da natureza é…','extrativismo',['indústria','comércio','pecuária'],'Retirar da natureza.','Retirar da natureza é extrativismo.'),
+   V('A fábrica de biscoitos é uma atividade da indústria.',true,'Ela transforma matérias-primas em biscoitos.'),
+   V('Agricultura é criar animais.',false,'Criar animais é pecuária. Agricultura é plantar.')],
+  k:POOL(['Agricultura','Pecuária','Indústria','Comércio'],[['plantar feijão',0],['colher laranjas',0],['criar vacas',1],['tirar leite das vacas',1],['fábrica de sapatos',2],['fábrica de biscoitos',2],['vender roupas',3],['supermercado',3]],'Plantar, criar animais, fabricar ou vender?')},
+ {id:'g5',m:'Módulo 10 · A população do município',t:'A população do município',e:'👨‍👩‍👧‍👦',pg:'página 72 e atividades',
+  cards:[['O que é população?','<b>População</b> é o conjunto de pessoas que moram em um lugar: um bairro, um município, um estado ou um país.','👨‍👩‍👧‍👦'],
+   ['Quem conta a população?','O <b>IBGE</b> faz o <b>Censo</b>: os recenseadores visitam as casas para saber quantas pessoas moram no país, quantos anos têm, onde trabalham…','📋'],
+   ['Para que serve?','Saber quantas pessoas moram no município ajuda a planejar escolas, hospitais, ruas, transporte e outros serviços.','🏗️'],
+   ['A população muda','Pessoas nascem, outras morrem ou se mudam. Por isso a população de um lugar muda com o tempo.','👶']],
+  q:[C('População é o conjunto de…','pessoas que vivem em um lugar',['casas de um bairro','animais de uma fazenda','carros de uma cidade'],'População tem a ver com gente.','População é o conjunto de pessoas que moram em um lugar.'),
+   C('Qual instituição conta e pesquisa a população do Brasil?','IBGE',['FIFA','NASA','IBM'],'É a sigla do Instituto Brasileiro de Geografia e Estatística.','O IBGE faz as pesquisas e o Censo.'),
+   C('A pesquisa que conta as pessoas do país se chama…','Censo',['Concurso','Passeio','Festival'],'Começa com C.','A pesquisa que conta a população é o Censo.'),
+   C('Para que serve saber quantas pessoas moram no município?','Para planejar escolas, hospitais e outros serviços',['Para escolher a cor da prefeitura','Para decidir o clima','Para contar estrelas'],'Pense em planejamento.','Os números ajudam a planejar o que a população precisa.'),
+   V('A população de um município nunca muda.',false,'Ela muda: pessoas nascem, morrem ou se mudam.'),
+   V('O Censo é feito pelo IBGE.',true,'Isso mesmo!')],
+  k:null},
+ {id:'g6',m:'Módulo 10 · A população do município',t:'População urbana e população rural',e:'🚌',pg:'páginas 76 a 85',
+  cards:[['População urbana','É a parte da população que vive na <b>cidade</b> (área urbana): em casas e prédios, perto de lojas, escolas e transporte.','🏢'],
+   ['População rural','É a parte da população que vive no <b>campo</b> (área rural): em sítios e fazendas, perto de plantações e pastos.','🚜'],
+   ['E no Brasil?','A maior parte da população brasileira vive em <b>áreas urbanas</b>. Muitas pessoas deixaram o campo e foram para a cidade em busca de trabalho, escola e serviços.','🇧🇷'],
+   ['Comparando','Urbana: mais trânsito, mais serviços por perto. Rural: mais silêncio, mais natureza e mais distância.','⚖️']],
+  q:[C('Quem vive na cidade faz parte da população…','urbana',['rural','florestal','industrial'],'Cidade é área urbana.','Quem vive na cidade integra a população urbana.'),
+   C('A maior parte dos brasileiros vive…','em áreas urbanas, nas cidades',['no campo','em florestas','em barcos'],'Pense onde estão as grandes cidades.','A maioria dos brasileiros mora em cidades.'),
+   C('Por que muitas pessoas mudam do campo para a cidade?','Procuram trabalho, escola e serviços',['Para plantar mais','Porque não gostam de natureza','Porque o campo acabou'],'Pense nas oportunidades.','Muitas pessoas buscam trabalho, estudo e serviços na cidade.'),
+   V('População rural é a que mora no campo.',true,'Isso mesmo!'),
+   V('Em área rural, em geral, há mais trânsito do que na cidade.',false,'O trânsito intenso é mais comum nas cidades.')],
+  k:POOL(['Urbana','Rural'],[['morar em apartamento',0],['pegar ônibus para ir ao centro',0],['viver perto de muitas lojas',0],['tirar leite de manhã cedo',1],['morar em um sítio',1],['ver plantações da janela',1]],'Cidade e prédios ou campo e natureza?')},
+ {id:'g7',m:'Módulo 11 · Serviços e problemas do município',t:'Serviços públicos e privados no município',e:'🚰',pg:'páginas 88 a 93',
+  cards:[['Serviços do município','São as atividades que atendem o que a população precisa no dia a dia.','🏙️'],
+   ['Serviços públicos','São oferecidos pelo governo para todos: <b>coleta de lixo, limpeza das ruas, iluminação, asfalto, escolas e postos de saúde públicos, transporte coletivo, bombeiros, polícia</b>.','🚌'],
+   ['Serviços privados','São oferecidos por empresas ou pessoas, e a gente paga: <b>salão, padaria, loja, clínica particular, escola particular</b>.','🛍️'],
+   ['Água e esgoto','Água tratada e esgoto cuidado são serviços muito importantes para a saúde de todos. Eles são organizados pelo governo, diretamente ou por meio de empresas contratadas.','🚰']],
+  q:[C('Qual destes é um serviço público do município?','A limpeza das ruas',['Uma sorveteria','Um salão de beleza','Uma loja de brinquedos'],'Procure o que a prefeitura faz para todos.','A limpeza das ruas é um serviço público.'),
+   C('O transporte coletivo (ônibus da cidade) atende…','toda a população',['só uma família','só quem tem carro','ninguém'],'Coletivo = de muitos.','O transporte coletivo serve a toda a população.'),
+   C('Asfaltar as ruas é um serviço feito por…','a prefeitura, o governo do município',['uma padaria','um salão','um clube'],'Pense em quem cuida das ruas.','Conservar as ruas é tarefa da prefeitura.'),
+   C('Uma padaria oferece um serviço…','privado',['público','do prefeito','gratuito para todos'],'A padaria tem dono.','A padaria é um negócio privado.'),
+   V('Água tratada e esgoto cuidado são importantes para a saúde.',true,'Eles ajudam a evitar muitas doenças.'),
+   V('Todos os serviços do município são pagos diretamente por quem usa, na hora.',false,'Os serviços públicos são pagos com os impostos.')],
+  k:POOL(['Serviço público','Serviço privado'],[['coleta de lixo',0],['iluminação das ruas',0],['asfalto das ruas',0],['transporte coletivo',0],['posto de saúde',0],['salão de beleza',1],['padaria',1],['clínica particular',1],['loja de brinquedos',1]],'Quem oferece? O governo ou uma empresa?')},
+ {id:'g8',m:'Módulo 11 · Serviços e problemas do município',t:'Problemas do município e como cuidar',e:'♻️',pg:'páginas 94 a 100',
+  cards:[['Problemas do município','Lixo espalhado, trânsito, enchentes, poluição do ar e da água, buracos nas ruas, falta de moradia, falta de saneamento e falta de segurança.','⚠️'],
+   ['Uma coisa leva à outra','Lixo na rua entope os bueiros. Quando chove forte, a água não escorre e ocorre <b>enchente</b>. Isso pode causar doenças e prejuízos.','🌧️'],
+   ['O que cada um pode fazer','Jogar o lixo na lixeira, <b>separar o lixo reciclável</b>, economizar água e energia, plantar árvores, cuidar das praças e respeitar o trânsito.','♻️'],
+   ['Todos juntos','A prefeitura cuida dos serviços, e a população ajuda cuidando do que é de todos e pedindo melhorias com respeito.','🤝']],
+  q:[C('O lixo jogado na rua pode causar…','entupimento de bueiros e enchentes',['mais árvores','ruas mais limpas','menos trânsito'],'Pense para onde a água da chuva vai.','O lixo entope os bueiros, e a água da chuva não escorre.'),
+   C('Qual atitude ajuda a cuidar do município?','Separar o lixo para a reciclagem',['Jogar papel pela janela do carro','Deixar a torneira aberta','Quebrar o banco da praça'],'Escolha a atitude que ajuda todos.','Separar o lixo ajuda a reciclagem e a natureza.'),
+   C('Quem pode ajudar a resolver os problemas do município?','Todos: a prefeitura e a população',['Só as crianças','Ninguém','Só os turistas'],'Pense em trabalho em equipe.','A prefeitura e a população precisam trabalhar juntas.'),
+   C('Qual é uma forma de economizar água?','Fechar a torneira ao escovar os dentes',['Deixar a mangueira ligada','Lavar a calçada todo dia','Tomar banhos muito longos'],'Escolha a atitude que gasta menos água.','Fechar a torneira evita desperdício.'),
+   V('Economizar água e energia ajuda a cuidar do município.',true,'Gastar menos poupa recursos para todos.'),
+   V('Enchentes podem acontecer quando o lixo entope os bueiros.',true,'O lixo impede a água de escorrer.')],
+  k:POOL(['Atitude boa','Atitude ruim'],[['jogar o lixo na lixeira',0],['separar o lixo reciclável',0],['plantar uma árvore',0],['fechar a torneira ao escovar os dentes',0],['jogar lixo na rua',1],['deixar as luzes acesas sem precisar',1],['pichar o muro da escola',1],['deixar a torneira aberta à toa',1]],'Essa atitude ajuda ou atrapalha o município?')}
+ ]},
+ing:{id:'ing',n:'Inglês',e:'🔤',bg:'linear-gradient(135deg,#ff9ac2,#b66bff)',book:'Unidades 7 e 8',
+ topics:[
+ {id:'e1',m:'Unit 7 · Playtime!',t:'Leisure activities',e:'🎨',pg:'páginas 82 a 87',voc:[['drawing','desenhar','🎨'],['reading','ler','📖'],['dancing','dançar','💃'],['singing','cantar','🎤'],['swimming','nadar','🏊'],['riding a bike','andar de bicicleta','🚲'],['playing soccer','jogar futebol','⚽'],['playing video games','jogar videogame','🎮']],
+  intro:'Atividades de lazer (o que a gente gosta de fazer). Toque no 🔊 para ouvir a pronúncia.'},
+ {id:'e2',m:'Unit 7 · Playtime!',t:'What do you like doing? Do you like…?',e:'💬',pg:'páginas 82 a 87',dial:true},
+ {id:'e3',m:'Unit 7 · Playtime!',t:'Musical instruments',e:'🎸',pg:'página 88',voc:[['guitar','violão / guitarra','🎸'],['drums','bateria','🥁'],['piano','piano','🎹'],['violin','violino','🎻'],['trumpet','trompete','🎺'],['saxophone','saxofone','🎷']],
+  intro:'Instrumentos musicais. Toque no 🔊 para ouvir.'},
+ {id:'e4',m:'Unit 8 · Cool Clothes',t:'Clothes and accessories',e:'👕',pg:'páginas 92 e 93',voc:[['T-shirt','camiseta','👕'],['jeans','calça jeans','👖'],['dress','vestido','👗'],['jacket','jaqueta','🧥'],['cap','boné','🧢'],['hat','chapéu','👒'],['socks','meias','🧦'],['sneakers','tênis','👟'],['boots','botas','🥾'],['sunglasses','óculos de sol','🕶️'],['scarf','cachecol','🧣'],['gloves','luvas','🧤']],
+  intro:'Roupas e acessórios. Toque no 🔊 para ouvir.'},
+ {id:'e5',m:'Unit 8 · Cool Clothes',t:'What are you wearing? Whose…?',e:'🧥',pg:'páginas 96 e 97',wear:true},
+ {id:'e6',m:'Unit 8 · Cool Clothes',t:'Toys',e:'🧸',pg:'página 98',voc:[['teddy bear','ursinho de pelúcia','🧸'],['robot','robô','🤖'],['train','trem','🚂'],['car','carro','🚗'],['puzzle','quebra-cabeça','🧩'],['kite','pipa','🪁'],['balloon','balão','🎈'],['board game','jogo de tabuleiro','🎲']],
+  intro:'Brinquedos. Toque no 🔊 para ouvir.'}
+ ]}
+};
+/* ============ estudo: calendário, vozes, geradores ============ */
+const todayMid=()=>{const d=new Date();d.setHours(0,0,0,0);return d;};
+const daysTo=iso=>{const[y,m,d]=iso.split('-').map(Number);return Math.round((new Date(y,m-1,d)-todayMid())/864e5);};
+const WD=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+const fmtD=iso=>{const[y,m,d]=iso.split('-').map(Number);const dt=new Date(y,m-1,d);return `${WD[dt.getDay()]}, ${String(d).padStart(2,'0')}/${String(m).padStart(2,'0')}`;};
+const inDays=n=>n===0?'hoje':n===1?'amanhã':`em ${n} dias`;
+const SUBS=[{id:'mat',n:'Matemática',e:'📐',bg:'linear-gradient(135deg,#7c5cff,#2f80ed)',go:()=>screenMath()},
+ {id:'his',n:'História',e:'🏛️',bg:SUBJ.his.bg,go:()=>screenSubject('his')},
+ {id:'geo',n:'Geografia',e:'🗺️',bg:SUBJ.geo.bg,go:()=>screenSubject('geo')},
+ {id:'ing',n:'Inglês',e:'🔤',bg:SUBJ.ing.bg,go:()=>screenSubject('ing')},
+ {id:'por',n:'Língua Portuguesa',e:'📖',soon:1},{id:'cie',n:'Ciências',e:'🔬',soon:1}];
+const subName=id=>(SUBS.find(s=>s.id===id)||{}).n||id;
+const upcoming=()=>PROVAS.map(e=>Object.assign({n:daysTo(e.d)},e)).filter(e=>e.n>=0).sort((a,b)=>a.n-b.n);
+const nextExamOf=id=>upcoming().find(e=>e.s===id);
+/* voz em inglês */
+const enVoices=()=>{try{return speechSynthesis.getVoices().filter(v=>/^en[-_]/i.test(v.lang));}catch(e){return[];}};
+const enScore=v=>{const n=v.name.toLowerCase();let s=0;if(/natural|neural|online|enhanced|premium|siri/.test(n))s+=6;if(/google/.test(n))s+=3;if(/^en[-_]US/i.test(v.lang))s+=2;if(/^en[-_]GB/i.test(v.lang))s+=1;if(/samantha|aria|jenny|zira|allison|ava/.test(n))s+=2;return s;};
+let warnedEn=false;
+function speakEn(t){if(!('speechSynthesis' in window))return false;const L=enVoices();if(!L.length){if(!warnedEn){warnedEn=true;toast('Este aparelho não tem voz em inglês: use as palavras escritas.');}return false;}
+  try{const v=L.slice().sort((a,b)=>enScore(b)-enScore(a))[0];speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.voice=v;u.lang=v.lang;u.rate=.8;u.pitch=1.05;u.volume=1;speechSynthesis.speak(u);return true;}catch(e){return false;}}
+/* progresso */
+const ST=sub=>S.study[sub]||(S.study[sub]={});
+const tstat=(sub,id)=>ST(sub)[id]||{best:0,tries:0,last:0,read:0};
+const topicDone=(sub,id)=>tstat(sub,id).best>=75;
+const subjDone=sub=>SUBJ[sub].topics.filter(t=>topicDone(sub,t.id)).length;
+const starsOf=p=>p>=90?3:p>=75?2:p>0?1:0;
+/* conteúdo de Inglês que não é só vocabulário */
+const DIAL_CARDS=[['Perguntar do que a gente gosta','<b>What do you like doing?</b><br>= Do que você gosta de fazer?<br><br>Resposta: <b>I like drawing.</b><br>= Eu gosto de desenhar.','💬','What do you like doing? I like drawing.'],
+ ['Do you like…?','<b>Do you like drawing?</b><br>= Você gosta de desenhar?<br><br>Se gosta: <b>Yes, I do.</b> (Sim, eu gosto.)<br>Se não gosta: <b>No, I don\'t.</b> (Não, eu não gosto.)','🙋','Do you like drawing? Yes, I do. No, I don\'t.'],
+ ['Depois de "I like" use -ing','I like <b>swimming</b>.<br>I like <b>dancing</b>.<br>I like <b>playing soccer</b>.<br>I like <b>riding a bike</b>.','🏊','I like swimming. I like dancing. I like playing soccer. I like riding a bike.'],
+ ['Para lembrar','<b>Do you like…?</b> → <b>Yes, I do.</b> ou <b>No, I don\'t.</b><br><b>What do you like doing?</b> → <b>I like…</b>','✅','Do you like? Yes, I do. No, I don\'t.']];
+const DIAL_Q=[C('"What do you like doing?" significa…','Do que você gosta de fazer?',['Quantos anos você tem?','Onde você mora?','Qual é o seu nome?'],'Veja a palavra "like" (gostar).','What do you like doing? = Do que você gosta de fazer?',{en:'What do you like doing?'}),
+ C('Responda: What do you like doing? (você gosta de nadar)','I like swimming.',['I like swim.','I swimming like.','Like I swimming.'],'Use "I like" + o verbo com -ing.','Depois de "I like" o verbo termina em -ing: I like swimming.'),
+ C('Do you like drawing? (Você gosta MUITO de desenhar.)','Yes, I do.',['No, I don\'t.','Yes, I don\'t.','No, I do.'],'Se você gosta, a resposta começa com Yes.','Quem gosta responde: Yes, I do.',{en:'Do you like drawing?'}),
+ C('Do you like dancing? (Você NÃO gosta de dançar.)','No, I don\'t.',['Yes, I do.','No, I do.','Yes, I don\'t.'],'Se você não gosta, a resposta começa com No.','Quem não gosta responde: No, I don\'t.',{en:'Do you like dancing?'}),
+ C('"Yes, I do." significa…','Sim, eu gosto.',['Não, eu não gosto.','Eu moro aqui.','Eu tenho dois.'],'Yes = sim.','Yes, I do. = Sim, eu gosto.',{en:'Yes, I do.'}),
+ C('"No, I don\'t." significa…','Não, eu não gosto.',['Sim, eu gosto.','Eu moro aqui.','Eu tenho um.'],'No = não.','No, I don\'t. = Não, eu não gosto.',{en:'No, I don\'t.'}),
+ C('Complete: I like ___ . (jogar futebol)','playing soccer',['play soccer','plays soccer','played soccer'],'Depois de "like" use -ing.','I like playing soccer.'),
+ V('"I like dancing" significa "Eu gosto de dançar".',true,'Dancing = dançar. I like dancing = Eu gosto de dançar.'),
+ V('"Do you like reading?" é uma pergunta.',true,'Do you like…? é uma pergunta: Você gosta de…?')];
+const swatch=c=>`<span style="display:inline-block;width:18px;height:18px;border-radius:50%;background:${c};box-shadow:inset 0 0 0 2px rgba(0,0,0,.25);vertical-align:-3px"></span>`;
+const WEAR_CARDS=[['What are you wearing?','<b>What are you wearing?</b><br>= O que você está vestindo?<br><br>Resposta: <b>I\'m wearing a red T-shirt and blue jeans.</b><br>= Eu estou vestindo uma camiseta vermelha e uma calça jeans azul.','🧥','What are you wearing? I\'m wearing a red T-shirt and blue jeans.'],
+ ['As cores',`${swatch('#e5484d')} red · ${swatch('#2f80ed')} blue · ${swatch('#ffd23f')} yellow · ${swatch('#1fb866')} green · ${swatch('#14141c')} black · ${swatch('#fff')} white · ${swatch('#ff6fb5')} pink · ${swatch('#ff9f1c')} orange · ${swatch('#7c5cff')} purple · ${swatch('#8a5a2b')} brown`,'🎨','red, blue, yellow, green, black, white, pink, orange, purple, brown'],
+ ['Whose…? (De quem é?)','<b>Whose cap is this?</b> = De quem é este boné?<br>Resposta: <b>It\'s Ben\'s.</b> = É do Ben.<br><br>O <b>\'s</b> mostra de quem é: Ben\'s cap, Ana\'s scarf.','🧢','Whose cap is this? It\'s Ben\'s.'],
+ ['Na frase, a cor vem antes','Em inglês a cor vem <b>antes</b> da roupa:<br>a <b>red</b> T-shirt (não "a T-shirt red")<br>a <b>blue</b> jacket<br>a <b>green</b> hat','✏️','a red T-shirt. a blue jacket. a green hat.']];
+const WEAR_Q=[C('"What are you wearing?" significa…','O que você está vestindo?',['De quem é isto?','Quantos anos você tem?','Do que você gosta?'],'Wearing = vestindo.','What are you wearing? = O que você está vestindo?',{en:'What are you wearing?'}),
+ C('Responda: What are you wearing? (camiseta vermelha)','I\'m wearing a red T-shirt.',['I\'m wearing a T-shirt red.','I wearing red T-shirt.','I\'m wear a red T-shirt.'],'A cor vem antes da roupa.','Resposta: I\'m wearing a red T-shirt.'),
+ C('"Whose" significa…','de quem',['onde','quando','quanto'],'Whose cap is this?','Whose = de quem.',{en:'Whose'}),
+ C('Whose cap is this? (É do Ben.)','It\'s Ben\'s.',['It\'s Ben.','Ben\'s is it.','Is Ben\'s it.'],'Use o \'s para mostrar de quem é.','It\'s Ben\'s. = É do Ben.',{en:'Whose cap is this?'}),
+ C('Whose scarf is this? (É da Ana.)','It\'s Ana\'s.',['It\'s Ana.','Ana\'s is it.','Is Ana\'s it.'],'Use o \'s.','It\'s Ana\'s. = É da Ana.',{en:'Whose scarf is this?'}),
+ C('Como se diz "calça jeans azul"?','blue jeans',['jeans blue','blues jean','jean blue'],'A cor vem antes.','Em inglês: blue jeans.'),
+ C('"Yellow" significa…','amarelo',['azul','verde','vermelho'],'A cor do sol.','Yellow = amarelo.',{en:'yellow'}),
+ C('"Green" significa…','verde',['preto','branco','laranja'],'A cor da folha.','Green = verde.',{en:'green'}),
+ C('Complete: I\'m wearing ___ .','a green jacket',['green a jacket','a jacket green','jacket a green'],'A cor vem antes da roupa.','I\'m wearing a green jacket.'),
+ V('"I\'m wearing" significa "Eu estou vestindo".',true,'Wearing = vestindo.')];
+/* vocabulário */
+const vocCards=t=>{const pages=[];for(let i=0;i<t.voc.length;i+=4)pages.push(t.voc.slice(i,i+4));return pages.map((p,i)=>({voc:p,title:`${t.t} ${i+1}/${pages.length}`,intro:t.intro}));};
+function genVoc(t){const W=t.voc,out=[],others=(w,k)=>shuffle(W.filter(x=>x!==w)).slice(0,3).map(x=>x[k]);
+  W.forEach(w=>{
+    out.push({q:'Como se diz em inglês?',big:w[2],o:[w[0],...others(w,0)],a:0,h:'Dica: a palavra começa com "'+w[0][0]+'".',x:`${w[2]} = <b>${w[0]}</b> (${w[1]})`});
+    out.push({q:`O que significa "${w[0]}"?`,o:[w[1],...others(w,1)],a:0,en:w[0],h:'Ouça de novo e pense na figura: '+w[2],x:`<b>${w[0]}</b> = ${w[1]} ${w[2]}`});
+    out.push({q:`Qual figura é "${w[0]}"?`,o:[w[2],...others(w,2)],a:0,en:w[0],h:'Ouça a palavra de novo.',x:`<b>${w[0]}</b> = ${w[2]}`});
+    out.push({q:'Escute e toque na figura certa.',o:[w[2],...others(w,2)],a:0,en:w[0],auto:1,h:'Toque no 🔊 para ouvir de novo.',x:`Você ouviu <b>${w[0]}</b> = ${w[1]} ${w[2]}`});});
+  return out;}
+const genK=(pool,n)=>shuffle(pool.items).slice(0,n).map(([item,ci])=>K(item,pool.cats,ci,`<b>${item}</b> é <b>${pool.cats[ci]}</b>.`,pool.hint));
+function topicQs(sub,t){if(t.voc)return genVoc(t);if(t.dial)return DIAL_Q.slice();if(t.wear)return WEAR_Q.slice();let L=(t.q||[]).slice();if(t.k)L=L.concat(genK(t.k,6));return L;}
+function toCfg(q,title,idx,count){const opts=q.o.map(l=>({v:l,label:l})),correct=q.o[q.a];
+  return{title,text:q.text||'',q:q.q,big:q.big,en:q.en,auto:q.auto,options:q.fix?opts:shuffle(opts),correct,h1:q.h,h2:q.x,ctx:{idx,count}};}
+/* erros para revisar */
+const wrongKey=q=>q.q+'|'+(q.text||'')+'|'+q.o[q.a];
+function addWrong(sub,tid,q){S.wrongQ=S.wrongQ.filter(w=>wrongKey(w.qd)!==wrongKey(q));S.wrongQ.push({s:sub,t:tid,qd:q});if(S.wrongQ.length>40)S.wrongQ.splice(0,S.wrongQ.length-40);}
+function clearWrong(q){S.wrongQ=S.wrongQ.filter(w=>wrongKey(w.qd)!==wrongKey(q));}
+/* ============ rodar um quiz ============ */
+async function runQuiz(sub,tid,qs,o={}){
+  running=true;const total=qs.length,queue=qs.map(q=>({q}));let idx=0,first=0;
+  while(queue.length){const it=queue.shift(),w=await askChoice(toCfg(it.q,o.title||'Vamos treinar!',Math.min(idx,total-1),total));
+    S.t.study=(S.t.study||0)+1;
+    if(w===0){if(!it.re)first++;clearWrong(it.q);}else if(!it.re){queue.push({q:it.q,re:1});addWrong(sub,tid,it.q);}
+    if(!it.re)idx++;save();}
+  const pct=Math.round(first/total*100),stars=pct>=90?3:pct>=75?2:1,coins=first*2+(total-first)+(pct===100?3:0);
+  S.coins+=coins;S.stars+=stars;addXp(4);
+  if(tid){const st=ST(sub),cur=st[tid]||{best:0,tries:0,last:0,read:0};cur.tries++;cur.best=Math.max(cur.best,pct);cur.last=Date.now();st[tid]=cur;}
+  else if(o.kind==='sim'){const st=ST(sub),cur=st._sim||{best:0,tries:0,last:0};cur.tries++;cur.best=Math.max(cur.best,pct);cur.last=Date.now();st._sim=cur;}
+  save();updHeader();SFX.win();confetti(pct>=75?40:15);
+  const msg=pct===100?'Perfeito! Você acertou tudo de primeira! 🌟':pct>=75?'Muito bem! Você mandou bem! 👏':'Bom treino! Errar faz parte de aprender. Vamos estudar mais um pouquinho e tentar de novo. 💪';
+  if(pct>=75)await celebrate('Parabéns!','Parabéns! Você mandou muito bem!',2600);
+  await modal([h('h2',{},o.kind==='sim'?'Simulado concluído! 📝':'Treino concluído! 🎉'),h('div',{class:'big'},'⭐'.repeat(stars)),h('p',{html:`De primeira, você acertou <b>${first} de ${total}</b> (${pct}%).`}),h('p',{},`+${coins} 🪙 · +${stars} ⭐`),h('p',{},msg)],'Continuar');
+  checkTrophies();screenSubject(sub);}
+/* ============ cartões de estudo ============ */
+function runStudy(sub,t){running=true;
+  const cards=t.voc?vocCards(t):t.dial?DIAL_CARDS.map(c=>({title:c[0],html:c[1],e:c[2],say:c[3]})):t.wear?WEAR_CARDS.map(c=>({title:c[0],html:c[1],e:c[2],say:c[3]})):t.cards.map(c=>({title:c[0],html:c[1],e:c[2]}));
+  let i=0;const isEn=sub==='ing';
+  const draw=()=>{const c=cards[i],last=i===cards.length-1,z=mascot('sm');
+    const body=c.voc?h('div',{},h('p',{class:'small',style:'text-align:center'},c.intro||''),h('div',{class:'vgrid'},c.voc.map(w=>h('div',{class:'vw'},h('div',{class:'ve'},w[2]),h('b',{},w[0]),h('small',{},w[1]),h('button',{class:'o',style:'min-height:40px;margin-top:6px',onclick:()=>speakEn(w[0])},'🔊')))))
+      :h('div',{class:'sbody',html:c.html});
+    const speak=()=>{if(c.voc)speakEn(c.voc.map(w=>w[0]).join('. '));else if(c.say)speakEn(c.say);else sayKid(c.title+'. '+c.html);};
+    const dots=h('div',{class:'dots',style:'justify-content:center'},cards.map((_,k)=>h('span',{class:'dot'+(k<i?' d':k===i?' c':'')})));
+    stage.replaceChildren(h('div',{class:'fcard'},h('div',{style:'display:flex;align-items:center;justify-content:center;gap:12px'},z,h('h2',{style:'margin:0'},`${t.e} ${c.title}`)),dots,
+      c.e?h('div',{style:'font-size:72px;line-height:1.1;margin:8px 0'},c.e):null,body,
+      h('div',{style:'display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px'},
+        h('button',{class:'w',disabled:i===0,onclick:()=>{i--;draw();}},'⬅ Voltar'),
+        h('button',{class:'o',onclick:speak},isEn&&(c.voc||c.say)?'🔊 Ouvir':'🔊 Ouvir o Zeca'),
+        last?h('button',{class:'g',onclick:()=>{const st=ST(sub),cur=st[t.id]||{best:0,tries:0,last:0,read:0};cur.read=1;st[t.id]=cur;save();runQuiz(sub,t.id,shuffle(topicQs(sub,t)).slice(0,8),{title:t.t});}},'✏️ Praticar agora'):h('button',{class:'p',onclick:()=>{i++;cheerHop(z);draw();}},'Próximo ➡')),
+      last?h('div',{style:'margin-top:10px'},h('button',{class:'w',onclick:()=>{const st=ST(sub),cur=st[t.id]||{best:0,tries:0,last:0,read:0};cur.read=1;st[t.id]=cur;save();screenSubject(sub);}},'Voltar aos assuntos')):null));};
+  draw();}
+/* ============ tela de uma matéria ============ */
+function startSim(sub){const S0=SUBJ[sub],per=Math.max(1,Math.ceil(12/S0.topics.length));let L=[];S0.topics.forEach(t=>{L=L.concat(shuffle(topicQs(sub,t)).slice(0,per));});runQuiz(sub,null,shuffle(L).slice(0,12),{title:'Simulado de '+S0.n,kind:'sim'});}
+function startReview(sub){const L=S.wrongQ.filter(w=>w.s===sub).slice(-8).map(w=>w.qd);if(!L.length){toast('Você não tem erros para revisar. 👏');return;}runQuiz(sub,null,L,{title:'Revisão dos meus erros',kind:'rev'});}
+function screenSubject(sub){running=false;updHeader();const S0=SUBJ[sub],done=subjDone(sub),tot=S0.topics.length,nx=nextExamOf(sub),wrong=S.wrongQ.filter(w=>w.s===sub).length,sim=ST(sub)._sim;
+  let lastM='';const rows=[];
+  S0.topics.forEach(t=>{if(t.m!==lastM){lastM=t.m;rows.push(h('h3',{style:'margin:14px 4px 6px;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.2)'},t.m));}
+    const st=tstat(sub,t.id),n=starsOf(st.best);
+    rows.push(h('div',{class:'topic'},h('div',{style:'font-size:40px;line-height:1'},t.e),h('div',{style:'flex:1;min-width:190px'},h('b',{style:'font-size:20px'},t.t),h('div',{class:'small'},`${t.pg}${st.tries?` · melhor: ${st.best}%`:''}`),h('div',{style:'font-size:20px'},n?'⭐'.repeat(n)+'☆'.repeat(3-n):'☆☆☆')),
+      h('button',{class:'y',onclick:()=>runStudy(sub,t)},'📖 Estudar'),h('button',{class:'g',onclick:()=>runQuiz(sub,t.id,shuffle(topicQs(sub,t)).slice(0,8),{title:t.t})},'✏️ Praticar')));});
+  stage.replaceChildren(h('button',{class:'w',onclick:screenHome},'⬅ Matérias'),
+    h('div',{class:'mission',style:`background:${S0.bg};margin:10px 0`},mascot('sm'),h('div',{style:'flex:1;min-width:200px'},h('h1',{style:'margin:0'},`${S0.e} ${S0.n}`),h('p',{},S0.book),nx?h('p',{style:'font-weight:800'},`📅 Prova ${inDays(nx.n)} (${fmtD(nx.d)})`):null,h('div',{class:'pbar2'},h('i',{style:`width:${Math.round(done/tot*100)}%`})),h('p',{class:'small',style:'color:#fff'},`${done} de ${tot} assuntos dominados (75% de acertos de primeira, ou mais)`)),
+      h('button',{class:'y',style:'font-size:20px',onclick:()=>startSim(sub)},'📝 Simulado da prova'),wrong?h('button',{class:'o',onclick:()=>startReview(sub)},`🔁 Rever meus erros (${wrong})`):null),
+    sim?h('p',{style:'color:#fff;text-align:center'},`Melhor simulado: ${sim.best}% · ${sim.tries} tentativa(s)`):'',
+    ...rows,
+    h('div',{class:'card',style:'margin-top:14px'},h('p',{class:'small'},'📌 Os assuntos seguem o calendário de provas da escola. As perguntas são de treino e não substituem o caderno: confira sempre as páginas indicadas e as anotações da professora.')));}
+/* ============ tela inicial: matérias à esquerda, Zeca à direita ============ */
 function screenHome(){running=false;updHeader();
-  const hero=h('div',{class:'hero'},mascot(),h('div',{},h('h1',{},S.name?`Oi, ${S.name}!`:'Oi! Eu sou o Zeca!'),h('p',{},S.name?'Pronto para a aventura dos números? 🚀':'Vamos treinar matemática e juntar prêmios!')));
-  if(!S.name){const inp=h('input',{type:'text',maxlength:'14',placeholder:'Seu apelido',style:'font-size:24px;padding:10px 14px;border-radius:16px;border:3px solid #cfe0f3;width:240px;font-family:inherit'});
-    stage.replaceChildren(hero,h('div',{class:'card'},h('p',{},'Como posso te chamar? (pode ser um apelido — fica só neste aparelho)'),inp,h('button',{class:'g',style:'margin-left:10px',onclick:()=>{S.name=(inp.value||'Explorador(a)').trim().slice(0,14);save();screenHome();}},'Começar')));return;}
-  stage.replaceChildren(hero,
+  if(!S.name){const inp=h('input',{type:'text',maxlength:'14',placeholder:'Seu apelido',style:'font-size:24px;padding:10px 14px;border-radius:16px;border:3px solid #cfe0f3;width:240px;max-width:100%;font-family:inherit'});
+    const z=h('div',{class:'zbig'});z.innerHTML=zecaSVG(S.outfit,'full');
+    stage.replaceChildren(h('div',{class:'home2'},h('div',{class:'card'},h('h1',{},'Oi! Eu sou o Zeca! 🦊'),h('p',{},'Vamos estudar juntos? Como posso te chamar? (pode ser um apelido — fica só neste aparelho)'),inp,h('button',{class:'g',style:'margin-left:10px',onclick:()=>{S.name=(inp.value||'Explorador(a)').trim().slice(0,14);save();screenHome();}},'Começar')),h('div',{class:'zside'},z)));return;}
+  const up=upcoming(),nx=up[0],tile=s=>{const ex=s.soon?null:nextExamOf(s.id),sm=SUBJ[s.id];
+    return h('button',{class:'subj'+(s.soon?' soon':''),style:s.soon?'':`background:${s.bg}`,onclick:()=>s.soon?toast('Em breve! Vamos incluir esta matéria nas próximas atualizações.'):s.go()},h('span',{class:'e'},s.e),s.n,
+      h('small',{},s.soon?'em breve':s.id==='mat'?'contas, tabuada e problemas':`${subjDone(s.id)} de ${sm.topics.length} assuntos dominados`),ex?h('span',{class:'bd'},`📅 Prova ${inDays(ex.n)} · ${ex.d.slice(8)}/${ex.d.slice(5,7)}`):null);};
+  const cal=h('div',{class:'card',style:'margin-top:14px'},h('h3',{style:'margin:0 0 6px'},'📅 Próximas provas'),up.length?up.map(e=>{const s=SUBS.find(x=>x.id===e.s);return h('div',{class:'rv',style:'align-items:center;cursor:pointer',onclick:()=>s&&!s.soon?s.go():toast('Em breve!')},h('div',{style:'font-size:30px;width:40px'},s?s.e:'📘'),h('div',{style:'flex:1'},h('b',{},subName(e.s)),h('div',{class:'small'},fmtD(e.d))),h('span',{class:'chip',style:e.n<=3?'background:#ffe3e3':''},inDays(e.n)));}):h('p',{class:'small'},'Nenhuma prova marcada.'));
+  const left=h('div',{},h('h1',{style:'margin:6px 0 12px'},'O que vamos estudar hoje? 📚'),h('div',{class:'sgrid'},SUBS.map(tile)),cal);
+  const msg=nx?`Oi, ${S.name}! Sua prova de ${subName(nx.s)} é ${inDays(nx.n)} (${fmtD(nx.d)}). Vamos estudar?`:`Oi, ${S.name}! Escolha uma matéria e vamos estudar!`;
+  const z=h('div',{class:'zbig',title:'Toque no Zeca!',onclick:()=>{cheerHop(z);sayKid(pick(['Oi!','Vamos estudar?','Eu adoro aprender com você!']));}});z.innerHTML=zecaSVG(S.outfit,'full');
+  const right=h('div',{class:'zside'},h('div',{class:'zbub'},msg,h('button',{class:'w',style:'min-height:34px;padding:2px 10px;margin-left:8px',onclick:()=>sayKid(msg)},'🔊')),z,
+    h('div',{class:'zuts'},h('button',{class:'tile',onclick:screenRewards},h('span',{class:'e'},'👗'),'Armário e Prêmios'),h('button',{class:'tile',onclick:screenPodium},h('span',{class:'e'},'🏅'),'Pódio'),h('button',{class:'tile',onclick:screenParents},h('span',{class:'e'},'👨‍👩‍👧'),'Pais e Professores')));
+  stage.replaceChildren(h('div',{class:'home2'},left,right));}
+/* resumo para pais e professores */
+function studyCard(){return h('div',{class:'card',style:'margin-top:14px'},h('h3',{},'📚 Estudo por matéria'),Object.values(SUBJ).map(s=>h('div',{style:'margin-bottom:8px'},h('b',{},`${s.e} ${s.n}`),` — ${subjDone(s.id)} de ${s.topics.length} assuntos dominados`,(ST(s.id)._sim?` · melhor simulado: ${ST(s.id)._sim.best}%`:''),
+  h('div',{class:'small'},s.topics.map(t=>{const st=tstat(s.id,t.id);return `${t.t}: ${st.tries?st.best+'% ('+st.tries+'x)':'ainda não praticado'}`;}).join(' · ')))),
+  h('p',{class:'small'},'Dominado = 75% ou mais de acertos de primeira em um treino. As perguntas seguem os assuntos do calendário de provas, mas não substituem o caderno.'));}
+TROPHIES.push({id:'his1',e:'🏛️',n:'Historiador(a)',d:'Domine um assunto de História',ok:()=>subjDone('his')>=1},{id:'geo1',e:'🗺️',n:'Explorador(a) do município',d:'Domine um assunto de Geografia',ok:()=>subjDone('geo')>=1},{id:'ing1',e:'🔤',n:'Speaking Zeca',d:'Domine um assunto de Inglês',ok:()=>subjDone('ing')>=1},
+ {id:'hisAll',e:'🏆',n:'Mestre da História',d:'Domine todos os assuntos de História',ok:()=>subjDone('his')>=SUBJ.his.topics.length},{id:'geoAll',e:'🌎',n:'Mestre da Geografia',d:'Domine todos os assuntos de Geografia',ok:()=>subjDone('geo')>=SUBJ.geo.topics.length},{id:'ingAll',e:'🌟',n:'Mestre do Inglês',d:'Domine todos os assuntos de Inglês',ok:()=>subjDone('ing')>=SUBJ.ing.topics.length},
+ {id:'sim',e:'📝',n:'Simulado de matéria',d:'Conclua um simulado de História, Geografia ou Inglês',ok:()=>Object.keys(SUBJ).some(k=>ST(k)._sim)}); 
+
+function screenMath(){running=false;updHeader();
+  const hero=h('div',{class:'hero'},mascot(),h('div',{},h('h1',{},S.name?`Oi, ${S.name}!`:'Oi! Eu sou o Zeca!'),h('p',{},'Pronto para a aventura dos números? 🚀')));
+  stage.replaceChildren(h('button',{class:'w',onclick:screenHome},'⬅ Matérias'),hero,
     h('div',{class:'mission',style:'background:linear-gradient(135deg,#ff9f1c,#e5484d);margin-bottom:14px'},h('div',{style:'font-size:56px'},'🌱'),h('div',{style:'flex:1;min-width:220px'},h('h2',{},'Missão Mais e Menos'),h('p',{},'Para quem está começando: somas, subtrações com "vai-um" e "empréstimo", balões, relâmpago e mini-prova — em blocos curtos, com pausa.')),h('button',{class:'y',style:'font-size:22px',onclick:()=>startMission('as')},'Começar!')),
     h('div',{class:'mission'},h('div',{style:'font-size:56px'},'🚀'),h('div',{style:'flex:1;min-width:220px'},h('h2',{},'Missão de 1 hora'),h('p',{},'Para multiplicação e divisão: aquecimento, cadernos, balões, tabuada oral, mini-prova e baú do tesouro — tudo em blocos curtos, com pausa.')),h('button',{class:'y',style:'font-size:22px',onclick:()=>startMission('md')},'Começar!')),
     h('div',{class:'grid'},
@@ -1063,16 +1459,14 @@ function screenHome(){running=false;updHeader();
       h('button',{class:'tile',onclick:()=>screenHub('mult')},h('span',{class:'e'},'✖️'),'Multiplicação',h('small',{},'contas, dobro e triplo, problemas')),
       h('button',{class:'tile',onclick:()=>screenHub('div')},h('span',{class:'e'},'➗'),'Divisão',h('small',{},'contas, metade e terço, quantas vezes cabe')),
       h('button',{class:'tile',onclick:screenTabuada},h('span',{class:'e'},'🎤'),'Tabuada',h('small',{},'aprender, relâmpago e prova oral')),
-      h('button',{class:'tile',onclick:screenExams},h('span',{class:'e'},'📝'),'Simulados',h('small',{},'provas de treino')),
-      h('button',{class:'tile',onclick:screenPodium},h('span',{class:'e'},'🏅'),'Pódio',h('small',{},'ranking e jogadores')),
-      h('button',{class:'tile',onclick:screenRewards},h('span',{class:'e'},'👗'),'Armário e Prêmios',h('small',{},'roupas do Zeca e troféus')),
-      h('button',{class:'tile',onclick:screenParents},h('span',{class:'e'},'👨‍👩‍👧'),'Pais e Professores',h('small',{},'progresso e privacidade'))));}
+      h('button',{class:'tile',onclick:screenExams},h('span',{class:'e'},'📝'),'Simulados',h('small',{},'provas de treino'))));}
 
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
 try{if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});}catch(e){}
 updHeader();
 if(IX.ids.length>1&&!SSN.get('zeca-chosen'))screenWho();else screenHome();
 window.__t={makeExercise,makeProblem,genMF,genDF,genDQ,genPM1,genPM2,buildMult,buildDiv,genMult,genDiv,buildAdd,buildSub,genAdd,genSub,genSum,makeExercise,ptNum,S:()=>S};
+window.__s={SUBJ,SUBS,PROVAS,daysTo,topicQs,toCfg,subjDone,genVoc,runQuiz,upcoming};
 </script>
 </body>
 </html>
