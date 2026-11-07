@@ -1,7 +1,7 @@
 {
-  "name": "Zeca e a Aventura dos Números",
+  "name": "Zeca e a Aventura do Saber",
   "short_name": "Zeca",
-  "description": "Jogo de matemática para crianças: adição, subtração, multiplicação, divisão e tabuada.",
+  "description": "Aplicativo de estudo para a 3ª série: Matemática, História, Geografia e Inglês, com o Zeca.",
   "lang": "pt-BR",
   "start_url": "./index.html",
   "scope": "./",
